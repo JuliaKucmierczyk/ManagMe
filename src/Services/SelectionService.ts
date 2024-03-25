@@ -8,4 +8,4 @@ export class SelectionService {
   static setCurrentProjectId(projectId: string): void {
     ApiService.setData('currentProjectId', projectId);
   }
-  }
+}
