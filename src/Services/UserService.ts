@@ -6,6 +6,7 @@ export class UserService {
       id: '1',
       firstName: 'John',
       lastName: 'Doe',
+      role: 'Developer'
     };
   }
 }
