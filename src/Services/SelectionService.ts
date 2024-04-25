@@ -6,6 +6,7 @@ export class SelectionService {
   }
 
   static setCurrentProjectId(projectId: string): void {
+    console.log("Current project id is:"+ projectId)
     ApiService.setData('currentProjectId', projectId);
   }
 }
