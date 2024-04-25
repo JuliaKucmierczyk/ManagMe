@@ -20,5 +20,4 @@ export const mockProjects: Project[] = [
       name: "Project Milano",
       description: "Description for Project C",
     },
-
-  ];
+];
