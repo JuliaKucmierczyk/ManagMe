@@ -1,11 +1,19 @@
+import { useNavigate } from "react-router-dom";
 import { Story } from "../Models/Story";
-import React from "react";
 
-interface Props {
-  stories: Story[];
-}
+import { StoryService } from "../Services/StoryService";
+import { SelectionService } from "../Services/SelectionService";
 
-const StoriesView: React.FC<Props> = ({ stories }) => {
+const StoriesView = () => {
+  const navigate = useNavigate();
+  let stories: Story[] = [];
+  const currentProject = SelectionService.getCurrentProjectId();
+  if (currentProject) {
+    stories = StoryService.getAllStoriesByProjectId(currentProject);
+  } else {
+    console.log("There is no current project selected");
+  }
+
   const groupedStories = stories.reduce(
     (acc, story) => {
       (acc[story.status] as Story[]).push(story);
@@ -17,6 +25,10 @@ const StoriesView: React.FC<Props> = ({ stories }) => {
       done: [],
     }
   );
+
+  const handleClick = () => {
+    navigate("/add-story");
+  };
 
   return (
     <div className="stories-container">
@@ -47,6 +59,9 @@ const StoriesView: React.FC<Props> = ({ stories }) => {
           </ul>
         </div>
       </div>
+      <button type="button" onClick={handleClick}>
+        Add Story
+      </button>
     </div>
   );
 };

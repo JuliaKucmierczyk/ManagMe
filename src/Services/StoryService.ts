@@ -21,9 +21,14 @@ export class StoryService {
         }
       }
 
-      static deleteStory(id: string): void {
+      static deleteStory(id: number): void {
         const stories = this.getAllStories();
         const filteredStories = stories.filter(story => story.id !== id);
         ApiService.setData('stories', filteredStories);
+      }
+
+      static getAllStoriesByProjectId(projectId: string): Story[] {
+        const allStories = this.getAllStories();
+        return allStories.filter(story => story.projectId === projectId);
       }
 }
