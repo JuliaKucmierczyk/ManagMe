@@ -16,12 +16,15 @@ const ProjectSelection: React.FC<Props> = ({ projects }) => {
   };
 
   return (
-    <div className="container">
+    <div className="container c-1">
       <h2>Select Project</h2>
       <ul className="list-of-projects">
         {projects.map((project) => (
           <li key={project.id} onClick={() => handleClickProject(project.id)}>
-            {project.name}
+            <div className="projects-description">
+              <h3>{project.name}</h3>
+              <p>{project.description}</p>
+            </div>
           </li>
         ))}
       </ul>

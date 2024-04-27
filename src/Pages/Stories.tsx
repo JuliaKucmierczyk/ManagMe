@@ -3,10 +3,13 @@ import { Story } from "../Models/Story";
 
 import { StoryService } from "../Services/StoryService";
 import { SelectionService } from "../Services/SelectionService";
+import { UserService } from "../Services/UserService";
 
 const StoriesView = () => {
   const navigate = useNavigate();
   let stories: Story[] = [];
+  const user = UserService.getLoggedInUser();
+
   const currentProject = SelectionService.getCurrentProjectId();
   if (currentProject) {
     stories = StoryService.getAllStoriesByProjectId(currentProject);
@@ -33,6 +36,13 @@ const StoriesView = () => {
   return (
     <div className="stories-container">
       <h1>Stories</h1>
+      <div className="button-user-view">
+        <button className="add-story-btn" type="button" onClick={handleClick}>
+          Add Story
+        </button>
+        <p className="logged-user">{user.firstName + " " + user.lastName}</p>
+      </div>
+
       <div className="kanban-board">
         <div className="kanban-column">
           <h2>Todo</h2>
@@ -59,9 +69,6 @@ const StoriesView = () => {
           </ul>
         </div>
       </div>
-      <button type="button" onClick={handleClick}>
-        Add Story
-      </button>
     </div>
   );
 };

@@ -4,9 +4,9 @@ export class UserService {
   static getLoggedInUser(): User {
     return {
       id: '1',
-      firstName: 'John',
-      lastName: 'Doe',
-      role: 'Developer'
+      firstName: 'Julia',
+      lastName: 'Kućmierczyk',
+      role: 'Admin'
     };
   }
 }
