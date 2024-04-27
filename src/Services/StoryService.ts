@@ -13,7 +13,7 @@ export class StoryService {
     
       static setCurrentStoryId(storyId: string): void {
         console.log("Current story id is:"+ storyId)
-        ApiService.setData('currentProjectId', storyId);
+        ApiService.setData('currentStoryId', storyId);
       }
 
       static createStory(newStory: Story): void {

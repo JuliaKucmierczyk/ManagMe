@@ -9,13 +9,13 @@ const TasksView = () => {
 
   let tasks: Task[] = [];
   const user = UserService.getLoggedInUser();
-
   const currentStory = StoryService.getCurrentStoryId();
 
   if (currentStory) {
     tasks = TaskService.getTasksByStoryId(currentStory);
   } else {
-    console.log("There is no current tasks selected");
+    console.log("Current story: " + currentStory);
+    console.log("There is no current tasks for this id");
   }
 
   const groupedTasks = tasks.reduce(
@@ -31,11 +31,11 @@ const TasksView = () => {
   );
 
   const handleClick = () => {
-    navigate("/add-task/${projectId}");
+    navigate("/add-task");
   };
 
   return (
-    <div className="tasks-container">
+    <div className="tasks-container stories-container">
       <h1>Tasks</h1>
       <div className="button-user-view">
         <button className="add-story-btn" type="button" onClick={handleClick}>
@@ -49,7 +49,24 @@ const TasksView = () => {
           <h2>Todo</h2>
           <ul>
             {groupedTasks.todo.map((task) => (
-              <li key={(task as Task).id}>{(task as Task).name}</li>
+              <li key={(task as Task).id}>
+                <h4>{(task as Task).name}</h4>
+                <p>{(task as Task).description}</p>
+                <p>
+                  Created: <span>{(task as Task).createdAt}</span>
+                </p>
+                <p>
+                  Estimated Hours: <span>{(task as Task).estimatedTime}</span>
+                </p>
+                <div className="dates">
+                  <p>
+                    Start Date: <span>{(task as Task).startDate}</span>
+                  </p>
+                  <p>
+                    EndDate: <span>{(task as Task).endDate}</span>
+                  </p>
+                </div>
+              </li>
             ))}
           </ul>
         </div>

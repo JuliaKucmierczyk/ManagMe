@@ -31,7 +31,7 @@ h3,
 h4,
 h5,
 h6 {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-weight: bold;
   text-transform: uppercase;
   position: relative;
@@ -125,6 +125,8 @@ ul li:hover {
   font-weight: 700;
 }
 
+/* Kanban */
+
 .kanban-board {
   display: flex;
   justify-content: space-between;
@@ -181,6 +183,23 @@ ul li:hover {
   transform: translateY(-2px);
 }
 
+.kanban-column p {
+  margin-bottom: 5px;
+  font-size: 0.8rem;
+}
+
+.kanban-column p span {
+  font-weight: bold;
+}
+
+.dates p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Stories */
+
 .stories-container form {
   display: flex;
   align-items: center;
@@ -231,7 +250,7 @@ ul li:hover {
 
 .add-story-form label {
   font-weight: bold;
-  margin-bottom: 0.25rem;
+  margin-top: 1rem;
   display: block;
 }
 

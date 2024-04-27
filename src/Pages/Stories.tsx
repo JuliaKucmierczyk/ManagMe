@@ -33,8 +33,8 @@ const StoriesView = () => {
   };
 
   const handleStoryClick = (storyId: number) => {
-    StoryService.setCurrentStoryId(storyId.toString());
     navigate(`/tasks/${storyId}`);
+    StoryService.setCurrentStoryId(storyId.toString());
   };
 
   return (

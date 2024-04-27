@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ListOfProjects projects={mockProjects} />} />
         <Route path="/stories/:projectId" element={<Stories />} />
-        <Route path="/tasks/:projectId" element={<ListOfTasks />} />
+        <Route path="/tasks/:storyId" element={<ListOfTasks />} />
         <Route path="/add-story" element={<AddStory />} />
         <Route path="/add-task" element={<AddTask />} />
       </Routes>
