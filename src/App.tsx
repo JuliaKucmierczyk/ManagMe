@@ -4,6 +4,8 @@ import { mockProjects } from "./Models/Project";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Stories from "./Pages/Stories";
 import AddStory from "./Pages/AddStory";
+import AddTask from "./Pages/AddTask";
+import ListOfTasks from "./Pages/ListOfTasks";
 
 function App() {
   return (
@@ -11,7 +13,9 @@ function App() {
       <Routes>
         <Route path="/" element={<ListOfProjects projects={mockProjects} />} />
         <Route path="/stories/:projectId" element={<Stories />} />
+        <Route path="/tasks/:projectId" element={<ListOfTasks />} />
         <Route path="/add-story" element={<AddStory />} />
+        <Route path="/add-task" element={<AddTask />} />
       </Routes>
     </BrowserRouter>
   );

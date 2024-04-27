@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { Story } from "../Models/Story";
-
 import { StoryService } from "../Services/StoryService";
 import { SelectionService } from "../Services/SelectionService";
 import { UserService } from "../Services/UserService";
@@ -33,6 +32,11 @@ const StoriesView = () => {
     navigate("/add-story");
   };
 
+  const handleStoryClick = (storyId: number) => {
+    StoryService.setCurrentStoryId(storyId.toString());
+    navigate(`/tasks/${storyId}`);
+  };
+
   return (
     <div className="stories-container">
       <h1>Stories</h1>
@@ -48,7 +52,12 @@ const StoriesView = () => {
           <h2>Todo</h2>
           <ul>
             {groupedStories.todo.map((story) => (
-              <li key={(story as Story).id}>{(story as Story).name}</li>
+              <li
+                key={(story as Story).id}
+                onClick={() => handleStoryClick((story as Story).id)}
+              >
+                {(story as Story).name}
+              </li>
             ))}
           </ul>
         </div>
@@ -56,7 +65,12 @@ const StoriesView = () => {
           <h2>Doing</h2>
           <ul>
             {groupedStories.doing.map((story) => (
-              <li key={(story as Story).id}>{(story as Story).name}</li>
+              <li
+                key={(story as Story).id}
+                onClick={() => handleStoryClick((story as Story).id)}
+              >
+                {(story as Story).name}
+              </li>
             ))}
           </ul>
         </div>
@@ -64,7 +78,12 @@ const StoriesView = () => {
           <h2>Done</h2>
           <ul>
             {groupedStories.done.map((story) => (
-              <li key={(story as Story).id}>{(story as Story).name}</li>
+              <li
+                key={(story as Story).id}
+                onClick={() => handleStoryClick((story as Story).id)}
+              >
+                {(story as Story).name}
+              </li>
             ))}
           </ul>
         </div>

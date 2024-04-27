@@ -2,8 +2,18 @@ import { ApiService } from '../API/ApiService';
 import { Story } from '../Models/Story';
 
 export class StoryService {
-    static getAllStories(): Story[] {
+  
+      static getAllStories(): Story[] {
         return ApiService.getData('stories') || [];
+      }
+
+      static getCurrentStoryId(): string | null {
+        return ApiService.getData('currentStoryId');
+      }
+    
+      static setCurrentStoryId(storyId: string): void {
+        console.log("Current story id is:"+ storyId)
+        ApiService.setData('currentProjectId', storyId);
       }
 
       static createStory(newStory: Story): void {
