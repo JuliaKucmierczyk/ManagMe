@@ -10,9 +10,6 @@ const AddTask: React.FC<Props> = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [estimatedTime, setEstimatedTime] = useState<number>();
-  const [startDate, setStartDate] = useState<string>();
-  const [endDate, setEndDate] = useState<string>();
-  // const [userId, setUser] = useState<string>();
   const [priority, setPriority] = useState<Task["priority"]>("low");
 
   const navigate = useNavigate();
@@ -29,9 +26,9 @@ const AddTask: React.FC<Props> = () => {
       state: "todo",
       createdAt: new Date().toUTCString(),
       estimatedTime,
-      startDate,
-      endDate,
-      userId: undefined,
+      startDate: undefined,
+      endDate: undefined,
+      user: undefined,
     };
 
     try {
@@ -67,22 +64,6 @@ const AddTask: React.FC<Props> = () => {
           id="estimatedTime"
           value={estimatedTime}
           onChange={(event) => setEstimatedTime(parseInt(event.target.value))}
-          required
-        />
-        <label htmlFor="startDate">Start date:</label>
-        <input
-          type="date"
-          id="startDate"
-          value={startDate}
-          onChange={(event) => setStartDate(event.target.value)}
-          required
-        />
-        <label htmlFor="endDate">End date:</label>
-        <input
-          type="date"
-          id="endDate"
-          value={endDate}
-          onChange={(event) => setEndDate(event.target.value)}
           required
         />
         <label htmlFor="priority">Priority:</label>

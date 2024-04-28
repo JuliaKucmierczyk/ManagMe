@@ -71,14 +71,6 @@ const ListOfTasks = () => {
                 <p>
                   Estimated Hours: <span>{(task as Task).estimatedTime}</span>
                 </p>
-                <div className="dates">
-                  <p>
-                    Start Date: <span>{(task as Task).startDate}</span>
-                  </p>
-                  <p>
-                    EndDate: <span>{(task as Task).endDate}</span>
-                  </p>
-                </div>
               </li>
             ))}
           </ul>
@@ -108,9 +100,6 @@ const ListOfTasks = () => {
                 <div className="dates">
                   <p>
                     Start Date: <span>{(task as Task).startDate}</span>
-                  </p>
-                  <p>
-                    EndDate: <span>{(task as Task).endDate}</span>
                   </p>
                 </div>
               </li>

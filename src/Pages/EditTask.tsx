@@ -37,6 +37,7 @@ const EditTask = () => {
         name,
         description,
         user: user?.id,
+        startDate: user ? new Date().toISOString() : undefined,
         state: user ? "doing" : task.state,
       };
       TaskService.updateTask(task.id, updatedTask);
@@ -52,6 +53,7 @@ const EditTask = () => {
     if (task) {
       const updatedTask = {
         ...task,
+        endDate: new Date().toISOString(),
         state: "done",
       } as Task;
       TaskService.updateTask(task.id, updatedTask);
