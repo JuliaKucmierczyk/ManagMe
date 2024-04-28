@@ -12,11 +12,10 @@ const AddTask: React.FC<Props> = () => {
   const [estimatedTime, setEstimatedTime] = useState<number>();
   const [startDate, setStartDate] = useState<string>();
   const [endDate, setEndDate] = useState<string>();
-  const [userId, setUser] = useState<string>();
+  // const [userId, setUser] = useState<string>();
   const [priority, setPriority] = useState<Task["priority"]>("low");
 
-  // Sprawdz
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -28,24 +27,23 @@ const AddTask: React.FC<Props> = () => {
       priority,
       storyId: StoryService.getCurrentStoryId() || "",
       state: "todo",
-      createdAt: new Date().toString(),
+      createdAt: new Date().toUTCString(),
       estimatedTime,
       startDate,
       endDate,
-      userId,
+      userId: undefined,
     };
 
     try {
       await TaskService.createTask(newTask);
-      // dsadasdasdasd
-      history("/tasks/" + StoryService.getCurrentStoryId());
+      navigate("/tasks/" + StoryService.getCurrentStoryId());
     } catch (error) {
       console.error("Error creating task:", error);
     }
   };
 
   return (
-    <div className="add-story-form add-story-form">
+    <div className="add-story-form ">
       <h1>Add Task to a Story</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Name:</label>
@@ -87,7 +85,7 @@ const AddTask: React.FC<Props> = () => {
           onChange={(event) => setEndDate(event.target.value)}
           required
         />
-        <label htmlFor="userId">User:</label>
+        {/* <label htmlFor="userId">User:</label>
         <select
           id="userId"
           value={userId}
@@ -96,7 +94,7 @@ const AddTask: React.FC<Props> = () => {
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
-        </select>
+        </select> */}
         <label htmlFor="priority">Priority:</label>
         <select
           id="priority"

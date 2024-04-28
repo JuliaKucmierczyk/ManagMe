@@ -1,7 +1,18 @@
+import { ApiService } from "../API/ApiService";
 import { Task } from "../Models/Task";
 
 export class TaskService {
   private static readonly STORAGE_KEY = 'tasks';
+
+
+  static getCurrentTaskId(): string | null {
+    return ApiService.getData('currentTaskId');
+  }
+
+  static setCurrentTaskId(taskId: string): void {
+    console.log("Current task id: "+ taskId)
+    ApiService.setData('currentTaskId', taskId);
+  }
 
   static getAllTasks(): Task[] {
     const tasksJson = localStorage.getItem(this.STORAGE_KEY);
@@ -44,7 +55,7 @@ export class TaskService {
     if (task) {
       task.userId = userId;
       task.state = 'doing';
-      task.startDate = new Date();
+      task.startDate = new Date().toUTCString();
       TaskService.updateTask(taskId, task);
     }
   }
@@ -53,7 +64,7 @@ export class TaskService {
     const task = TaskService.getTaskById(taskId);
     if (task) {
       task.state = 'done';
-      task.endDate = new Date();
+      task.endDate = new Date().toUTCString();
       TaskService.updateTask(taskId, task);
     }
   }

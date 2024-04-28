@@ -4,12 +4,11 @@ import { Task } from "../Models/Task";
 import { TaskService } from "../Services/TaskService";
 import { StoryService } from "../Services/StoryService";
 
-const TasksView = () => {
+const ListOfTasks = () => {
   const navigate = useNavigate();
-
-  let tasks: Task[] = [];
   const user = UserService.getLoggedInUser();
   const currentStory = StoryService.getCurrentStoryId();
+  let tasks: Task[] = [];
 
   if (currentStory) {
     tasks = TaskService.getTasksByStoryId(currentStory);
@@ -34,6 +33,11 @@ const TasksView = () => {
     navigate("/add-task");
   };
 
+  const editTask = (taskId: string) => {
+    navigate(`/edit-task/${taskId}`);
+    TaskService.setCurrentTaskId(taskId);
+  };
+
   return (
     <div className="tasks-container stories-container">
       <h1>Tasks</h1>
@@ -50,7 +54,16 @@ const TasksView = () => {
           <ul>
             {groupedTasks.todo.map((task) => (
               <li key={(task as Task).id}>
-                <h4>{(task as Task).name}</h4>
+                <div className="button-user-view">
+                  <h4>{(task as Task).name}</h4>
+                  <button
+                    type="submit"
+                    className="edit-btn"
+                    onClick={() => editTask((task as Task).id)}
+                  >
+                    Edit
+                  </button>
+                </div>
                 <p>{(task as Task).description}</p>
                 <p>
                   Created: <span>{(task as Task).createdAt}</span>
@@ -91,4 +104,4 @@ const TasksView = () => {
   );
 };
 
-export default TasksView;
+export default ListOfTasks;
