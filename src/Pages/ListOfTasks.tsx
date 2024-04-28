@@ -87,7 +87,33 @@ const ListOfTasks = () => {
           <h2>Doing</h2>
           <ul>
             {groupedTasks.doing.map((task) => (
-              <li key={(task as Task).id}>{(task as Task).name}</li>
+              <li key={(task as Task).id}>
+                <div className="button-user-view">
+                  <h4>{(task as Task).name}</h4>
+                  <button
+                    type="submit"
+                    className="edit-btn"
+                    onClick={() => editTask((task as Task).id)}
+                  >
+                    Edit
+                  </button>
+                </div>
+                <p>{(task as Task).description}</p>
+                <p>
+                  Created: <span>{(task as Task).createdAt}</span>
+                </p>
+                <p>
+                  Estimated Hours: <span>{(task as Task).estimatedTime}</span>
+                </p>
+                <div className="dates">
+                  <p>
+                    Start Date: <span>{(task as Task).startDate}</span>
+                  </p>
+                  <p>
+                    EndDate: <span>{(task as Task).endDate}</span>
+                  </p>
+                </div>
+              </li>
             ))}
           </ul>
         </div>
@@ -95,7 +121,33 @@ const ListOfTasks = () => {
           <h2>Done</h2>
           <ul>
             {groupedTasks.done.map((task) => (
-              <li key={(task as Task).id}>{(task as Task).name}</li>
+              <li key={(task as Task).id}>
+                <div className="button-user-view">
+                  <h4>{(task as Task).name}</h4>
+                  <button
+                    type="submit"
+                    className="edit-btn"
+                    onClick={() => editTask((task as Task).id)}
+                  >
+                    Edit
+                  </button>
+                </div>
+                <p>{(task as Task).description}</p>
+                <p>
+                  Created: <span>{(task as Task).createdAt}</span>
+                </p>
+                <p>
+                  Estimated Hours: <span>{(task as Task).estimatedTime}</span>
+                </p>
+                <div className="dates">
+                  <p>
+                    Start Date: <span>{(task as Task).startDate}</span>
+                  </p>
+                  <p>
+                    EndDate: <span>{(task as Task).endDate}</span>
+                  </p>
+                </div>
+              </li>
             ))}
           </ul>
         </div>

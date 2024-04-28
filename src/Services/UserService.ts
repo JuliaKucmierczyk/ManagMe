@@ -1,4 +1,4 @@
-import { User } from '../Models/User'
+import { User, mockUsers } from '../Models/User'
 
 export class UserService {
   static getLoggedInUser(): User {
@@ -10,17 +10,12 @@ export class UserService {
     };
   }
 
-  static async getAllUsers(): Promise<User[]> {
-    try {
-      const response = await fetch("/api/users"); 
-      if (!response.ok) {
-        throw new Error(`Failed to fetch users: ${response.statusText}`);
-      }
-      const users = await response.json() as User[];
-      return users;
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      throw error; 
-    }
+  static getAllUsers(): User[] {
+    return mockUsers;
+  }
+
+  static getAllDevs(): User[] {
+    const users = this.getAllUsers(); 
+    return users.filter((user) => user.role === "Devops" || user.role === "Developer");
   }
 }

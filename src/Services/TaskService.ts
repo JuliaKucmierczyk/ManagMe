@@ -1,5 +1,6 @@
 import { ApiService } from "../API/ApiService";
 import { Task } from "../Models/Task";
+import { User } from "../Models/User";
 
 export class TaskService {
   private static readonly STORAGE_KEY = 'tasks';
@@ -50,10 +51,10 @@ export class TaskService {
     TaskService.setTasks(filteredTasks);
   }
 
-  static assignUserToTask(taskId: string, userId: string): void {
+  static assignUserToTask(taskId: string, user: User): void {
     const task = TaskService.getTaskById(taskId);
     if (task) {
-      task.userId = userId;
+      task.user = user;
       task.state = 'doing';
       task.startDate = new Date().toUTCString();
       TaskService.updateTask(taskId, task);

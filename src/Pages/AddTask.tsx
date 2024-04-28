@@ -85,16 +85,6 @@ const AddTask: React.FC<Props> = () => {
           onChange={(event) => setEndDate(event.target.value)}
           required
         />
-        {/* <label htmlFor="userId">User:</label>
-        <select
-          id="userId"
-          value={userId}
-          onChange={(event) => setUser(event.target.value)}
-        >
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select> */}
         <label htmlFor="priority">Priority:</label>
         <select
           id="priority"

@@ -1,3 +1,4 @@
+
 export interface Task {
     id: string;
     name: string;
@@ -9,5 +10,5 @@ export interface Task {
     estimatedTime: number | undefined;
     startDate: string | undefined; 
     endDate: string | undefined;
-    userId: string | undefined;
+    user: string | undefined;
 }
