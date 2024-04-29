@@ -1,72 +1,12 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
 import 'dotenv/config'
 import cors from 'cors'
 
-const app = express();
-const PORT = process.env.PORT || 5000;
+const app = express()
+const port = 3000
 
-
-const mySecret = process.env.JWT_SECRET || 'default_secret'; // Not recommended for production
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const token = jwt.sign({ userId: 1 }, mySecret, { expiresIn: '1h' });
-// Database or user authentication logic here (replace with your implementation)
-const users = [
-  { id: 1, login: 'admin', password: '$2y10$7/7z1313z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3/z3' }, 
-];
-
-app.post('/api/login', async (req, res) => {
-  const { login, password } = req.body;
-
-  const user = users.find((user) => user.login === login);
-
-  if (!user) {
-    return res.status(401).json({ error: 'Invalid login or password' });
-  }
-
-  const passwordMatch = await bcrypt.compare(password, user.password);
-
-  if (!passwordMatch) {
-    return res.status(401).json({ error: 'Invalid login or password' });
-  }
-
-  const accessToken = jwt.sign({ userId: user.id },mySecret, { expiresIn: '1h' });
-  const refreshToken = jwt.sign({ userId: user.id }, mySecret, { expiresIn: '7d' });
-
-  res.json({ accessToken, refreshToken });
-});
-
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
-
-app.post('/api/refresh-token', async (req, res) => {
-    const refreshToken = req.headers['refresh-token'];
-  
-    if (!refreshToken) {
-      return res.status(401).json({ error: 'Missing refresh token' });
-    }
-  
-    try {
-      const decodedRefreshToken = jwt.verify(refreshToken, process.env.JWT_SECRET);
-  
-      const userId = decodedRefreshToken.userId;
-  
-      const user = users.find((user) => user.id === userId); // Replace with your user lookup logic
-  
-      if (!user) {
-        return res.status(401).json({ error: 'Invalid refresh token' });
-      }
-  
-      const newAccessToken = jwt.sign({ userId: user.id }, mySecret, { expiresIn: '1h' });
-  
-      res.json({ accessToken: newAccessToken });
-    } catch (error) {
-      console.error('Error refreshing token:', error);
-      res.status(401).json({ error: 'Invalid refresh token' });
-    }
-  });
-  const tokenSecret = process.env.TOKEN_SECRET as string
+const tokenSecret = process.env.TOKEN_SECRET as string
 let refreshToken: string
 
 app.use(cors())
@@ -111,8 +51,8 @@ app.get(
     }, delay)
   }
 )
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`)
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
 })
 
 function generateToken(expirationInSeconds: number) {

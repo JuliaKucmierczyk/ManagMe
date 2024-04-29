@@ -75,7 +75,24 @@ const LoginForm = () => {
     <div className="login-form">
       <h2>Logowanie</h2>
       <form onSubmit={handleSubmit}>
-        {/* ... login and password fields ... */}
+        <label htmlFor="username">Nazwa użytkownika:</label>
+        <input
+          type="text"
+          id="username"
+          name="login" // Name should match the data sent in axios.post
+          value={login}
+          onChange={(event) => setLogin(event.target.value)}
+          required
+        />
+        <label htmlFor="password">Hasło:</label>
+        <input
+          type="password"
+          id="password"
+          name="password" // Name should match the data sent in axios.post
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          required
+        />
         <button type="submit">Zaloguj się</button>
       </form>
       {error && <p className="error">{error}</p>}
