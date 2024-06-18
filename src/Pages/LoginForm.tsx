@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 interface LoginFormValues {
   username: string;
@@ -18,23 +19,15 @@ const LoginForm: React.FC = () => {
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await await axios.post("/api/login", data);
 
-      const { token, refreshToken, error } = await response.json();
+      const { token, refreshToken, error } = response.data;
 
       if (error) {
         setLoginError(error);
         return;
       }
 
-      // Secure storage recommendation (replace with your chosen method)
-      // Implement a secure storage solution (e.g., a library) instead of localStorage
       localStorage.setItem("accessToken", token);
       localStorage.setItem("refreshToken", refreshToken);
 

@@ -3,8 +3,8 @@ import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 import cors from 'cors'
 
-const app = express()
-const port = 3000
+const app = express();
+const port = 3000;
 
 const tokenSecret = process.env.TOKEN_SECRET as string
 let refreshToken: string
@@ -13,7 +13,7 @@ app.use(cors())
 app.use(express.json())
 
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.send('Hello World - simple api with JWT!')
 })
 
@@ -61,6 +61,7 @@ const users = [
 app.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
 
+  try {
   const user = users.find(u => u.username === username);
 
   if (!user) {
@@ -75,6 +76,11 @@ app.post('/api/login', async (req, res) => {
   refreshToken = jwt.sign({ username }, tokenSecret, { expiresIn: '1d' });
 
   res.status(200).send({ accessToken, refreshToken });
+
+} catch (error) {
+  console.error(error);
+  res.status(500).send('Internal server error'); // Generic error for unexpected issues
+}
 });
 
 app.listen(port, () => {
