@@ -1,102 +1,74 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [login, setLogin] = useState("");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState();
+interface LoginFormValues {
+  username: string;
+  password: string;
+}
+
+const LoginForm: React.FC = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormValues>();
   const navigate = useNavigate();
+  const [loginError, setLoginError] = useState("");
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-
+  const onSubmit = async (data: LoginFormValues) => {
     try {
-      const response = await axios.post("/api/login", {
-        login,
-        password,
-      });
-
-      const data = response.data;
-
-      if (response) {
-        // Login successful
-        console.log("Login successful:", data);
-        localStorage.setItem("accessToken", data.accessToken);
-        localStorage.setItem("refreshToken", data.refreshToken);
-        navigate("/protected-route"); // Redirect to protected route
-      } else {
-        setError(data.error); // Handle login error
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-    }
-  };
-
-  const handleRefreshToken = async () => {
-    const refreshToken = localStorage.getItem("refreshToken");
-
-    if (!refreshToken) {
-      return; // Handle missing refresh token (e.g., logout)
-    }
-
-    try {
-      const response = await axios.post("/api/refresh-token", {
+      const response = await fetch("/api/login", {
+        method: "POST",
         headers: {
-          "refresh-token": refreshToken, // Access single value from localStorage
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify(data),
       });
 
-      const data = response.data;
+      const { token, refreshToken, error } = await response.json();
 
-      if (response) {
-        console.log("Refresh token successful:", data);
-        localStorage.setItem("accessToken", data.accessToken); // Update access token
-      } else {
-        console.error("Refresh token error:", data.error);
-        // Handle refresh token error (e.g., logout or prompt new login)
+      if (error) {
+        setLoginError(error);
+        return;
       }
+
+      // Secure storage recommendation (replace with your chosen method)
+      // Implement a secure storage solution (e.g., a library) instead of localStorage
+      localStorage.setItem("accessToken", token);
+      localStorage.setItem("refreshToken", refreshToken);
+
+      navigate("/protected-route");
     } catch (error) {
-      console.error("Refresh token error:", error);
-      // Handle generic refresh token error (e.g., logout or prompt new login)
+      console.error(error);
+      setLoginError("Wystąpił błąd podczas logowania.");
     }
   };
-
-  // Call refresh token logic periodically (adjust interval as needed)
-  useEffect(() => {
-    const intervalId = setInterval(handleRefreshToken, 1000 * 60 * 30); // Refresh every 30 minutes
-
-    return () => clearInterval(intervalId); // Cleanup on unmount
-  }, []);
 
   return (
-    <div className="login-form">
-      <h2>Logowanie</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Nazwa użytkownika:</label>
-        <input
-          type="text"
-          id="username"
-          name="login" // Name should match the data sent in axios.post
-          value={login}
-          onChange={(event) => setLogin(event.target.value)}
-          required
-        />
-        <label htmlFor="password">Hasło:</label>
-        <input
-          type="password"
-          id="password"
-          name="password" // Name should match the data sent in axios.post
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          required
-        />
-        <button type="submit">Zaloguj się</button>
-      </form>
-      {error && <p className="error">{error}</p>}
-    </div>
+    <form onSubmit={handleSubmit(onSubmit)} className="login-form">
+      <label htmlFor="username">Nazwa użytkownika:</label>
+      <input
+        id="username"
+        name="username"
+        type="text"
+        ref={register("username").ref}
+      />
+      {errors.username && <p className="error">{errors.username.message}</p>}
+
+      <label htmlFor="password">Hasło:</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        ref={register("password").ref}
+      />
+      {errors.password && <p className="error">{errors.password.message}</p>}
+
+      <button type="submit">Zaloguj się</button>
+
+      {loginError && <p className="error">{loginError}</p>}
+    </form>
   );
 };
 

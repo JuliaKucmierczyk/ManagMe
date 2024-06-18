@@ -12,6 +12,7 @@ let refreshToken: string
 app.use(cors())
 app.use(express.json())
 
+
 app.get('/', (req, res) => {
   res.send('Hello World - simple api with JWT!')
 })
@@ -51,6 +52,31 @@ app.get(
     }, delay)
   }
 )
+
+const users = [
+  { username: 'Julia', password: 'start' }, 
+];
+
+// Login endpoint
+app.post('/api/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  const user = users.find(u => u.username === username);
+
+  if (!user) {
+    return res.status(401).send('Invalid username or password');
+  }
+
+  if (password !== user.password) {
+    return res.status(401).send('Invalid username or password');
+  }
+
+  const accessToken = jwt.sign({ username }, tokenSecret, { expiresIn: '15m' });
+  refreshToken = jwt.sign({ username }, tokenSecret, { expiresIn: '1d' });
+
+  res.status(200).send({ accessToken, refreshToken });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
