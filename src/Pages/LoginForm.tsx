@@ -19,17 +19,22 @@ const LoginForm: React.FC = () => {
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
-      const response = await await axios.post("/api/login", data);
+      const response = await axios.post(
+        "http://localhost:3000/api/login",
+        data
+      );
 
       const { token, refreshToken, error } = response.data;
+      console.log(token, refreshToken);
+      localStorage.setItem("accessToken", token);
+      localStorage.setItem("refreshToken", refreshToken);
+
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
       if (error) {
         setLoginError(error);
         return;
       }
-
-      localStorage.setItem("accessToken", token);
-      localStorage.setItem("refreshToken", refreshToken);
 
       navigate("/protected-route");
     } catch (error) {
