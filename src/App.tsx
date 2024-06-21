@@ -7,14 +7,18 @@ import AddStory from "./Pages/AddStory";
 import AddTask from "./Pages/AddTask";
 import ListOfTasks from "./Pages/ListOfTasks";
 import EditTask from "./Pages/EditTask";
-import LoginForm from "./Pages/LoginForm";
+import Register from "./Pages/Register";
+import Login from "./Pages/Login";
+// import LoginForm from "./Pages/LoginForm";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<ListOfProjects projects={mockProjects} />} />
-        <Route path="/login" element={<LoginForm />} />
+        {/* <Route path="/login" element={<LoginForm />} /> */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/stories/:projectId" element={<Stories />} />
         <Route path="/tasks/:storyId" element={<ListOfTasks />} />
         <Route path="/add-story" element={<AddStory />} />
