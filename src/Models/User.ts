@@ -3,6 +3,8 @@ export interface User {
     firstName: string;
     lastName: string;
     role: "Admin" | "Devops" | "Developer";
+    username: string;
+    password: string;
 }
 
 export const mockUsers: User[] = [
@@ -10,24 +12,32 @@ export const mockUsers: User[] = [
       id: "1",
       firstName: "Julia",
       lastName: "Kućmierczyk",
-      role: "Admin"
+      role: "Admin",
+      username: "user1",
+      password: "test123",
     },
     {
         id: "2",
         firstName: "Izabela",
         lastName: "Radzik",
-        role: "Devops"
+        role: "Devops",
+        username: "user2",
+        password: "password2",
     },
     {
         id: "3",
         firstName: "Adrian",
         lastName: "Kosiński",
-        role: "Developer"
+        role: "Developer",
+        username: "user3",
+        password: "password3",
     },
     {
         id: "4",
         firstName: "Piotr",
         lastName: "Dziadkowiec",
-        role: "Developer"
+        role: "Developer",
+        username: "user4",
+        password: "password4",
     },
 ];

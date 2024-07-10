@@ -36,7 +36,6 @@ const EditTask = () => {
         ...task,
         name,
         description,
-        user: user?.id,
         startDate: user ? new Date().toISOString() : undefined,
         state: user ? "doing" : task.state,
       };
@@ -67,27 +66,24 @@ const EditTask = () => {
   }
 
   return (
-    <div className="edit-task-container add-story-form">
+    <div className="add-story-form container">
       <h2>Edit Task</h2>
       <form onSubmit={handleEditTask}>
         <label htmlFor="name">Name:</label>
         <input
           type="text"
           id="name"
+          defaultValue={task.name}
           value={name}
           onChange={(event) => setName(event.target.value)}
-          defaultValue={task.name}
-          required
         />
-
         <label htmlFor="description">Description:</label>
         <textarea
           id="description"
+          defaultValue={task.description}
           value={description}
           onChange={(event) => setDescription(event.target.value)}
-          defaultValue={task.description}
         />
-
         <label htmlFor="user">User:</label>
         <select
           id="user"
@@ -100,7 +96,6 @@ const EditTask = () => {
             </option>
           ))}
         </select>
-
         <button type="submit">Save</button>
         <button type="button" onClick={handleCancel}>
           Cancel

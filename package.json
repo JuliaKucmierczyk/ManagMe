@@ -2,9 +2,9 @@
   "name": "managme",
   "private": true,
   "version": "0.0.0",
-  "main": "server.ts",
+  "type": "module",
   "scripts": {
-    "start": "nodemon server.ts",
+    "start": "nodemon Server.ts",
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",

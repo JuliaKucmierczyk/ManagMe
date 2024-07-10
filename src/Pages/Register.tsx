@@ -8,7 +8,7 @@ function Register() {
   const [password, setPassword] = useState("");
 
   async function registerUser() {
-    const response = await fetch("http://localhost:1337/api/register", {
+    const response = await fetch("http://localhost:3000/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,9 +27,9 @@ function Register() {
   }
 
   return (
-    <div>
+    <div className="add-story-form container">
       <h1>Register</h1>
-      <form onSubmit={registerUser}>
+      <form onSubmit={registerUser} className="form">
         <input
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -44,7 +44,7 @@ function Register() {
           placeholder="Password"
         />
         <br />
-        <input type="submit" value="Register" />
+        <button className="b">Register</button>
       </form>
     </div>
   );

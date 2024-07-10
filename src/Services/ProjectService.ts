@@ -1,4 +1,4 @@
-import { ApiService } from '../API/ApiService';
+import {ApiService} from "../API/ApiService"
 import { Project } from '../Models/Project';
 
 export class ProjectService {

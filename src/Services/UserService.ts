@@ -6,7 +6,9 @@ export class UserService {
       id: '1',
       firstName: 'Julia',
       lastName: 'Kućmierczyk',
-      role: 'Admin'
+      role: 'Admin',
+      username: "user1",
+      password: "test"
     };
   }
 

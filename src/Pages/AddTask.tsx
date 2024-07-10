@@ -40,7 +40,7 @@ const AddTask: React.FC<Props> = () => {
   };
 
   return (
-    <div className="add-story-form ">
+    <div className="add-story-form">
       <h1>Add Task to a Story</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Name:</label>

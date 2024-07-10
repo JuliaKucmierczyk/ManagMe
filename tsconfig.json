@@ -1,11 +1,11 @@
 {
-  "compilerOptions": {
+  "compilerOptions": 
+  {
   "esModuleInterop": true,
-
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "CommonJS",
+    "module": "ESNext",
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -22,7 +22,10 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-
-  "include": ["src", "server.ts"],
+  "ts-node": {
+        // Tell ts-node CLI to install the --loader automatically
+        "esm": true
+    },
+  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
