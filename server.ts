@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
-import { JWTService } from "./JWTService" 
-import { mockUsers } from "./src/Models/User"
+import {JWTService} from "./src/Services/JWTService.ts";
+import {mockUsers} from "./src/Models/User.ts";
 
 const app = express();
 const PORT = 5184;

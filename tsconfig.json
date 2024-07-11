@@ -1,15 +1,14 @@
 {
-  "compilerOptions": 
-  {
+  "compilerOptions": {
   "esModuleInterop": true,
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
+    "module":"ESNext",
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -24,7 +23,9 @@
   },
   "ts-node": {
         // Tell ts-node CLI to install the --loader automatically
-        "esm": true
+        "experimentalSpecifierResolution": "node",
+    "transpileOnly": true,
+    "esm": true,
     },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
