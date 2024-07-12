@@ -1,16 +1,23 @@
 import express from "express";
 import bodyParser from "body-parser";
-import {JWTService} from "./src/Services/JWTService.ts";
-import {mockUsers} from "./src/Models/User.ts";
+import {JWTService} from "./JWTService.ts";
+import {mockUsers} from "../src/Models/User.ts";
+import { dbconnection } from "./Database.ts";
+
+// Najbardziej we wszystkim pomogło mi to:
+// https://medium.com/@codemaniac-sahil/authentication-in-nodejs-and-mongodb-using-jwt-and-cookies-d617bd98cdea
 
 const app = express();
 const PORT = 5184;
+dbconnection();
 
 app.use(bodyParser.json());
 
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
+  console.log(username + " " + password);
+  console.log(req.body);
   const user = mockUsers.find(
     (user) => user.username === username && user.password === password
   );

@@ -28,3 +28,6 @@ function App() {
 }
 
 export default App;
+
+// To run the server
+// node --loader ts-node/esm Server.ts
