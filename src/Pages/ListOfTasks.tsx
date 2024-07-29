@@ -3,6 +3,7 @@ import { UserService } from "../Services/UserService";
 import { Task } from "../Models/Task";
 import { TaskService } from "../Services/TaskService";
 import { StoryService } from "../Services/StoryService";
+import { Column, Kanban } from "./Stories";
 
 const ListOfTasks = () => {
   const navigate = useNavigate();
@@ -48,8 +49,8 @@ const ListOfTasks = () => {
         <p className="logged-user">{user.firstName + " " + user.lastName}</p>
       </div>
 
-      <div className="kanban-board">
-        <div className="kanban-column">
+      <Kanban>
+        <Column>
           <h2>Todo</h2>
           <ul>
             {groupedTasks.todo.map((task) => (
@@ -74,8 +75,8 @@ const ListOfTasks = () => {
               </li>
             ))}
           </ul>
-        </div>
-        <div className="kanban-column">
+        </Column>
+        <Column>
           <h2>Doing</h2>
           <ul>
             {groupedTasks.doing.map((task) => (
@@ -105,8 +106,8 @@ const ListOfTasks = () => {
               </li>
             ))}
           </ul>
-        </div>
-        <div className="kanban-column">
+        </Column>
+        <Column>
           <h2>Done</h2>
           <ul>
             {groupedTasks.done.map((task) => (
@@ -139,8 +140,8 @@ const ListOfTasks = () => {
               </li>
             ))}
           </ul>
-        </div>
-      </div>
+        </Column>
+      </Kanban>
     </div>
   );
 };

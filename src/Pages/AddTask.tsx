@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { StoryService } from "../Services/StoryService";
 import { Task } from "../Models/Task";
 import { TaskService } from "../Services/TaskService";
+import { Form, FormBtn, FormContainer, FormInput } from "./Login";
+import { Selector, TextArea } from "./EditTask";
 
 interface Props {}
 
@@ -40,34 +42,33 @@ const AddTask: React.FC<Props> = () => {
   };
 
   return (
-    <div className="add-story-form">
+    <FormContainer>
       <h1>Add Task to a Story</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
-        <input
+      <Form onSubmit={handleSubmit}>
+        <FormInput
           type="text"
           id="name"
+          placeholder="Name"
           value={name}
           onChange={(event) => setName(event.target.value)}
           required
         />
-        <label htmlFor="description">Description:</label>
-        <textarea
+        <TextArea
           id="description"
           value={description}
+          placeholder="Description"
           onChange={(event) => setDescription(event.target.value)}
           required
         />
-        <label htmlFor="estimatedTime">Estimated hours:</label>
-        <input
+        <FormInput
           type="number"
           id="estimatedTime"
+          placeholder="Estimated Hours"
           value={estimatedTime}
           onChange={(event) => setEstimatedTime(parseInt(event.target.value))}
           required
         />
-        <label htmlFor="priority">Priority:</label>
-        <select
+        <Selector
           id="priority"
           value={priority}
           onChange={(event) =>
@@ -77,10 +78,10 @@ const AddTask: React.FC<Props> = () => {
           <option value="low">Low</option>
           <option value="medium">Medium</option>
           <option value="high">High</option>
-        </select>
-        <button type="submit">Add Task</button>
-      </form>
-    </div>
+        </Selector>
+        <FormBtn type="submit">Add Task</FormBtn>
+      </Form>
+    </FormContainer>
   );
 };
 

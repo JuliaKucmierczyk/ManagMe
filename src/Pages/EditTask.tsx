@@ -5,6 +5,23 @@ import React, { useEffect, useState } from "react";
 import { StoryService } from "../Services/StoryService";
 import { UserService } from "../Services/UserService";
 import { User } from "../Models/User";
+import { Form, FormBtn, FormContainer, FormInput } from "./Login";
+import styled from "styled-components";
+
+export const TextArea = styled.textarea`
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 100%;
+  resize: vertical;
+`;
+export const Selector = styled.select`
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 100%;
+  resize: vertical;
+`;
 
 const EditTask = () => {
   const navigate = useNavigate();
@@ -66,26 +83,25 @@ const EditTask = () => {
   }
 
   return (
-    <div className="add-story-form container">
+    <FormContainer>
       <h2>Edit Task</h2>
-      <form onSubmit={handleEditTask}>
-        <label htmlFor="name">Name:</label>
-        <input
+      <Form onSubmit={handleEditTask}>
+        <FormInput
           type="text"
           id="name"
+          placeholder="Name"
           defaultValue={task.name}
           value={name}
           onChange={(event) => setName(event.target.value)}
         />
-        <label htmlFor="description">Description:</label>
-        <textarea
+        <TextArea
           id="description"
+          placeholder="Description"
           defaultValue={task.description}
           value={description}
           onChange={(event) => setDescription(event.target.value)}
         />
-        <label htmlFor="user">User:</label>
-        <select
+        <Selector
           id="user"
           value={user?.id}
           onChange={(event) => setUser(event.target.value as unknown as User)}
@@ -95,16 +111,12 @@ const EditTask = () => {
               {user.firstName} ({user.role})
             </option>
           ))}
-        </select>
-        <button type="submit">Save</button>
-        <button type="button" onClick={handleCancel}>
-          Cancel
-        </button>
-        <button type="button" onClick={handleDoneClick}>
-          Done
-        </button>
-      </form>
-    </div>
+        </Selector>
+        <FormBtn type="submit">Save</FormBtn>
+        <FormBtn onClick={handleCancel}>Cancel</FormBtn>
+        <FormBtn onClick={handleDoneClick}>Done</FormBtn>
+      </Form>
+    </FormContainer>
   );
 };
 

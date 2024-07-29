@@ -70,6 +70,11 @@ export class TaskService {
     }
   }
 
+  static getNumberOfTasksInStory(storyId: string): number {
+    const tasks = TaskService.getAllTasks();
+    return tasks.filter(task => task.storyId === storyId).length;
+  }
+
   private static setTasks(tasks: Task[]): void {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(tasks));
   }

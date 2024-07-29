@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Story } from "../Models/Story";
 import { StoryService } from "../Services/StoryService";
 import { SelectionService } from "../Services/SelectionService";
+import { Form, FormBtn, FormContainer, FormInput } from "./Login";
+import { Selector, TextArea } from "./EditTask";
 
 interface AddStoryProps {}
 
@@ -35,26 +37,25 @@ const AddStory: React.FC<AddStoryProps> = () => {
   };
 
   return (
-    <div className="add-story-form">
+    <FormContainer>
       <h1>Add Story</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
-        <input
+      <Form onSubmit={handleSubmit}>
+        <FormInput
           type="text"
           id="name"
+          placeholder="Name"
           value={name}
           onChange={(event) => setName(event.target.value)}
           required
         />
-        <label htmlFor="description">Description:</label>
-        <textarea
+        <TextArea
           id="description"
+          placeholder="Description"
           value={description}
           onChange={(event) => setDescription(event.target.value)}
           required
         />
-        <label htmlFor="priority">Priority:</label>
-        <select
+        <Selector
           id="priority"
           value={priority}
           onChange={(event) =>
@@ -64,10 +65,10 @@ const AddStory: React.FC<AddStoryProps> = () => {
           <option value="low">Low</option>
           <option value="medium">Medium</option>
           <option value="high">High</option>
-        </select>
-        <button type="submit">Add Story</button>
-      </form>
-    </div>
+        </Selector>
+        <FormBtn type="submit">Add Story</FormBtn>
+      </Form>
+    </FormContainer>
   );
 };
 

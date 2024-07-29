@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Form, FormBtn, FormContainer, FormInput } from "./Login";
 
 function Register() {
   const navigate = useNavigate();
@@ -27,26 +28,24 @@ function Register() {
   }
 
   return (
-    <div className="add-story-form container">
+    <FormContainer>
       <h1>Register</h1>
-      <form onSubmit={registerUser} className="form">
-        <input
+      <Form onSubmit={registerUser} className="form">
+        <FormInput
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           type="text"
           placeholder="Name"
         />
-        <br />
-        <input
+        <FormInput
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
           placeholder="Password"
         />
-        <br />
-        <button className="b">Register</button>
-      </form>
-    </div>
+        <FormBtn>Register</FormBtn>
+      </Form>
+    </FormContainer>
   );
 }
 

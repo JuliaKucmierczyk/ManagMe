@@ -1,8 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
-import {JWTService} from "./JWTService.ts";
-import {mockUsers} from "../src/Models/User.ts";
-import { dbconnection } from "./Database.ts";
+import {JWTService} from "./server/JWTService.ts";
+import {mockUsers} from "./src/Models/User.ts";
+import { dbconnection } from "./server/Database.ts";
 
 // Najbardziej we wszystkim pomogło mi to:
 // https://medium.com/@codemaniac-sahil/authentication-in-nodejs-and-mongodb-using-jwt-and-cookies-d617bd98cdea
