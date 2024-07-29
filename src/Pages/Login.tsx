@@ -1,49 +1,10 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import styled from "styled-components";
-
-export const FormContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  border-radius: 10px;
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
-  width: fit-content;
-  min-width: 30rem;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: white;
-`;
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-export const FormBtn = styled.button`
-  background-color: dodgerblue;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin-bottom: 15px;
-  cursor: pointer;
-  border-radius: 5px;
-  border: none;
-  width: 6rem;
-
-  &:hover {
-    background-color: rgb(11, 82, 152);
-  }
-`;
-export const FormInput = styled.input`
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  width: 100%;
-  margin-bottom: 10px;
-`;
+import {
+  FormInput,
+  FormContainer,
+  Form,
+  FormBtn,
+} from "../Styles/StyledComponents";
 
 function Login() {
   const [username, setUsername] = useState("");

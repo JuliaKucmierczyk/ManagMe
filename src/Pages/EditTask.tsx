@@ -5,23 +5,14 @@ import React, { useEffect, useState } from "react";
 import { StoryService } from "../Services/StoryService";
 import { UserService } from "../Services/UserService";
 import { User } from "../Models/User";
-import { Form, FormBtn, FormContainer, FormInput } from "./Login";
-import styled from "styled-components";
-
-export const TextArea = styled.textarea`
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  width: 100%;
-  resize: vertical;
-`;
-export const Selector = styled.select`
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  width: 100%;
-  resize: vertical;
-`;
+import {
+  FormInput,
+  FormContainer,
+  Form,
+  FormBtn,
+  TextArea,
+  Selector,
+} from "../Styles/StyledComponents";
 
 const EditTask = () => {
   const navigate = useNavigate();
@@ -112,9 +103,11 @@ const EditTask = () => {
             </option>
           ))}
         </Selector>
-        <FormBtn type="submit">Save</FormBtn>
-        <FormBtn onClick={handleCancel}>Cancel</FormBtn>
-        <FormBtn onClick={handleDoneClick}>Done</FormBtn>
+        <div>
+          <FormBtn type="submit">Save</FormBtn>
+          <FormBtn onClick={handleCancel}>Cancel</FormBtn>
+          <FormBtn onClick={handleDoneClick}>Done</FormBtn>
+        </div>
       </Form>
     </FormContainer>
   );

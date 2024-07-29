@@ -1,4 +1,4 @@
-import "./App.css";
+import "./Styles/App.css";
 import ListOfProjects from "./Pages/ListOfProjects";
 import { mockProjects } from "./Models/Project";
 import { BrowserRouter, Routes, Route } from "react-router-dom";

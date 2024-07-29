@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, FormBtn, FormContainer, FormInput } from "./Login";
+import {
+  FormInput,
+  FormContainer,
+  Form,
+  FormBtn,
+} from "../Styles/StyledComponents";
 
 function Register() {
   const navigate = useNavigate();

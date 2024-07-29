@@ -3,8 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { Story } from "../Models/Story";
 import { StoryService } from "../Services/StoryService";
 import { SelectionService } from "../Services/SelectionService";
-import { Form, FormBtn, FormContainer, FormInput } from "./Login";
-import { Selector, TextArea } from "./EditTask";
+import {
+  FormInput,
+  FormContainer,
+  Form,
+  FormBtn,
+  Selector,
+  TextArea,
+} from "../Styles/StyledComponents";
 
 interface AddStoryProps {}
 
