@@ -178,6 +178,9 @@ const ListOfTasks = () => {
                     Start Date: <span>{(task as Task).startDate}</span>
                   </p>
                 </div>
+                <p>
+                  Assigned:<span>{(task as Task).user?.firstName}</span>
+                </p>
               </li>
             ))}
           </ul>

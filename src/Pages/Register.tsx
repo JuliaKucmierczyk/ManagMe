@@ -40,7 +40,7 @@ function Register() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           type="text"
-          placeholder="Name"
+          placeholder="Username"
         />
         <FormInput
           value={password}

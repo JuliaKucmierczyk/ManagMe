@@ -37,6 +37,16 @@ export class StoryService {
         ApiService.setData('stories', filteredStories);
       }
 
+      // static isStoryInProgress(storyId: string): boolean {
+      //   const tasks = TaskService.getTasksByStoryId(storyId);
+      //   return tasks.some(task => task.state === 'doing');
+      // }
+    
+      // static isStoryCompleted(storyId: string): boolean {
+      //   const tasks = TaskService.getTasksByStoryId(storyId);
+      //   return tasks.every(task => task.state === 'done');
+      // }
+
       static getAllStoriesByProjectId(projectId: string): Story[] {
         const allStories = this.getAllStories();
         return allStories.filter(story => story.projectId === projectId);

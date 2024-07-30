@@ -31,6 +31,10 @@ const EditTask = () => {
       const fetchedTask = TaskService.getTaskById(taskId);
       console.log("Fetched task: " + fetchedTask);
       setTask(fetchedTask);
+      setName(fetchedTask!.name);
+      setDescription(fetchedTask!.description);
+      setUser(fetchedTask!.user ? fetchedTask!.user : undefined);
+      TaskService.assignUserToTask(fetchedTask!.id, fetchedTask!.user as User);
     }
     const users = UserService.getAllDevs();
     setUsers(users);
@@ -44,10 +48,12 @@ const EditTask = () => {
         ...task,
         name,
         description,
+        user,
         startDate: user ? new Date().toISOString() : undefined,
         state: user ? "doing" : task.state,
       };
-      TaskService.updateTask(task.id, updatedTask);
+      TaskService.assignUserToTask(task.id, updatedTask.user as User),
+        TaskService.updateTask(task.id, updatedTask);
       navigate(`/tasks/${currentStory}`);
     }
   };
@@ -82,14 +88,14 @@ const EditTask = () => {
           id="name"
           placeholder="Name"
           defaultValue={task.name}
-          value={name}
+          // value={task.name}
           onChange={(event) => setName(event.target.value)}
         />
         <TextArea
           id="description"
           placeholder="Description"
           defaultValue={task.description}
-          value={description}
+          // value={task.description}
           onChange={(event) => setDescription(event.target.value)}
         />
         <Selector

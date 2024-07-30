@@ -35,7 +35,19 @@ const StoriesView = () => {
 
   const groupedStories = stories.reduce(
     (acc, story) => {
-      (acc[story.status] as Story[]).push(story);
+      const tasks = TaskService.getTasksByStoryId(story.id.toString());
+      const isDoing = tasks.some((task) => task.state === "doing");
+      const isDone = tasks.every((task) => task.state === "done");
+      const isToDo = tasks.every((task) => task.state === "todo");
+
+      if (isToDo) {
+        (acc["todo"] as Story[]).push(story);
+      } else if (isDone) {
+        (acc["done"] as Story[]).push(story);
+      } else if (isDoing) {
+        (acc["doing"] as Story[]).push(story);
+      }
+
       return acc;
     },
     {
@@ -50,7 +62,7 @@ const StoriesView = () => {
   };
 
   const goBack = () => {
-    navigate(-1);
+    navigate("/");
   };
 
   const handleStoryClick = (storyId: number) => {
