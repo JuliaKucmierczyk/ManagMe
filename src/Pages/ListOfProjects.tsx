@@ -1,8 +1,9 @@
 import React from "react";
-import { Project } from "../Models/Project";
 import { SelectionService } from "../Services/SelectionService";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { Btn, Nav } from "../Styles/StyledComponents";
+import { ProjectService } from "../Services/ProjectService";
 
 const Container = styled.section`
   display: flex;
@@ -13,9 +14,8 @@ const Container = styled.section`
 `;
 
 const ProjectsList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  display: flex;
+  gap: 3rem;
 `;
 
 const Li = styled.li`
@@ -29,7 +29,6 @@ const ProjectElement = styled.div`
   color: #111111;
   width: 20rem;
   margin-top: 20px;
-  margin: 1.1rem;
 
   background-color: #fff;
   border-radius: 10px;
@@ -44,11 +43,7 @@ const ProjectElement = styled.div`
   }
 `;
 
-interface Props {
-  projects: Project[];
-}
-
-const ProjectSelection: React.FC<Props> = ({ projects }) => {
+const ProjectSelection: React.FC = () => {
   const navigate = useNavigate();
 
   const handleClickProject = (projectId: string) => {
@@ -56,9 +51,18 @@ const ProjectSelection: React.FC<Props> = ({ projects }) => {
     navigate(`/stories/${projectId}`);
   };
 
+  const addProject = () => {
+    navigate(`/add-project`);
+  };
+
+  const projects = ProjectService.getAllProjects();
+
   return (
     <Container>
-      <h2>Select Project</h2>
+      <Nav>
+        <h2>Select Project</h2>
+        <Btn onClick={addProject}>Add Project</Btn>
+      </Nav>
       <ProjectsList>
         {projects.map((project) => (
           <Li key={project.id} onClick={() => handleClickProject(project.id)}>

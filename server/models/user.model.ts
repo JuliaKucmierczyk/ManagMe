@@ -1,10 +1,22 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt'; 
 
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
+  id: { type: String, required: true },
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  role: { type: String, enum: ['Admin', 'Devops', 'Developer'], required: true },
   username: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-}, { collection: 'user-data' });
+  password: { type: String, required: true }
+});
 
-const User = mongoose.model('UserData', UserSchema);
+userSchema.pre('save', async function (next) {
+  if (this.isModified('password'))
+ {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  }
+  next();
+});
 
-export default User;
+module.exports = mongoose.model('User', userSchema);
