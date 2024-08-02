@@ -1,36 +1,48 @@
 import express from "express";
 import bodyParser from "body-parser";
 import {JWTService} from "./server/JWTService.ts";
-import {mockUsers} from "./src/Models/User.ts";
+import {UserModel} from "./server/models/user.model.ts"
 import { dbconnection } from "./server/Database.ts";
+import cors from "cors";
 
 // Najbardziej we wszystkim pomogło mi to:
 // https://medium.com/@codemaniac-sahil/authentication-in-nodejs-and-mongodb-using-jwt-and-cookies-d617bd98cdea
 
-const app = express();
-const PORT = 5184;
+const app = express()
+app.use(express.json())
+app.use(cors())
+const PORT = 7000;
 dbconnection();
 
 app.use(bodyParser.json());
 
+
 app.post("/login", (req, res) => {
-  const { username, password } = req.body;
+  const {username, password} = req.body;
+  UserModel.findOne({username : username})
+  .then(user => {
+      if(user) {
+          if(user.password === password){
+              res.json("Success")
+          }else{
+              res.json("The password is incorrect")
+          }
+      }else{
+          res.json("No record existed")
+      }
+  })
+})
 
-  console.log(username + " " + password);
-  console.log(req.body);
-  const user = mockUsers.find(
-    (user) => user.username === username && user.password === password
-  );
+app.post("/register", (req, res) => {
+  UserModel.create(req.body)
+  .then(users => res.json(users))
+  .catch(err => res.json(err))
+})
 
-  if (user) {
-    const token = JWTService.generateToken({ id: user.id, role: user.role });
-    const refreshToken = JWTService.generateRefreshToken({ id: user.id });
 
-    res.json({ token, refreshToken });
-  } else {
-    res.status(401).json({ error: "Invalid credentials" });
-  }
-});
+app.listen(3001, () => {
+  console.log("server is running")
+})
 
 app.post("/refresh-token", (req, res) => {
   const { refreshToken } = req.body;

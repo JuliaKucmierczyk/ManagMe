@@ -6,36 +6,47 @@ import {
   Form,
   FormBtn,
 } from "../Styles/StyledComponents";
+import axios from "axios";
 
 function Register() {
-  const navigate = useNavigate();
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+  const navigate = useNavigate();
 
-  async function registerUser() {
-    const response = await fetch("http://localhost:3000/api/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+  const handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:7000/register", {
         username,
         password,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (data.status === "ok") {
-      navigate("/login", { replace: true });
-    }
-  }
+        firstName,
+        lastName,
+      })
+      .then((result) => {
+        console.log(result);
+        navigate("/login");
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <FormContainer>
       <h1>Register</h1>
-      <Form onSubmit={registerUser} className="form">
+      <Form onSubmit={handleSubmit} className="form">
+        <FormInput
+          value={firstName}
+          onChange={(e) => setfirstName(e.target.value)}
+          type="text"
+          placeholder="First name"
+        />
+        <FormInput
+          value={lastName}
+          onChange={(e) => setlastName(e.target.value)}
+          type="text"
+          placeholder="Last name"
+        />
         <FormInput
           value={username}
           onChange={(e) => setUsername(e.target.value)}

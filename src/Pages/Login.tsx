@@ -1,37 +1,32 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState } from "react";
 import {
   FormInput,
   FormContainer,
   Form,
   FormBtn,
 } from "../Styles/StyledComponents";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setUsername(e.target.value);
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setPassword(e.target.value);
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5184/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log("Token:", data.token);
-      console.log("Refresh Token:", data.refreshToken);
-    } else {
-      console.error("Login failed. Response status:", response.status);
-    }
+    axios
+      .post("http://localhost:7000/login", { username, password })
+      .then((result) => {
+        console.log(result);
+        if (result.data === "Success") {
+          navigate("/");
+        } else {
+          navigate("/register");
+          alert("You are not registered to this service");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -44,7 +39,7 @@ function Login() {
           placeholder="Username"
           maxLength={255}
           value={username}
-          onChange={handleUsernameChange}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
         <FormInput
@@ -53,7 +48,7 @@ function Login() {
           placeholder="Password"
           maxLength={255}
           value={password}
-          onChange={handlePasswordChange}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
         <FormBtn>Login</FormBtn>
