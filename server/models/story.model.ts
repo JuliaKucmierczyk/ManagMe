@@ -11,4 +11,4 @@ const storySchema = new mongoose.Schema({
   ownerId: { type: String, ref: 'User' } 
 });
 
-module.exports = mongoose.model('Story', storySchema);
+export const StoryModel = mongoose.model('Story', storySchema);

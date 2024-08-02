@@ -11,6 +11,7 @@ import {
   Selector,
   TextArea,
 } from "../Styles/StyledComponents";
+import axios from "axios";
 
 interface Props {}
 
@@ -22,8 +23,8 @@ const AddTask: React.FC<Props> = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
     const newTask: Task = {
       id: (Math.floor(Math.random() * 100000) + 1).toString(),
@@ -38,6 +39,14 @@ const AddTask: React.FC<Props> = () => {
       endDate: undefined,
       user: undefined,
     };
+
+    axios
+      .post("http://localhost:7000/add-task", { newTask })
+      .then((result) => {
+        console.log(result);
+        navigate("/tasks/" + StoryService.getCurrentStoryId());
+      })
+      .catch((err) => console.log(err));
 
     try {
       await TaskService.createTask(newTask);
