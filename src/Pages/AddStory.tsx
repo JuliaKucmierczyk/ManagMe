@@ -11,6 +11,7 @@ import {
   Selector,
   TextArea,
 } from "../Styles/StyledComponents";
+import axios from "axios";
 
 interface AddStoryProps {}
 
@@ -23,23 +24,32 @@ const AddStory: React.FC<AddStoryProps> = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const newStory: Story = {
-      id: Math.floor(Math.random() * 100000) + 1,
-      name,
-      description,
-      priority,
-      projectId: SelectionService.getCurrentProjectId() || "",
-      creationDate: new Date(),
-      status: "todo",
-      ownerId: "user-x",
-    };
-
-    try {
-      await StoryService.createStory(newStory);
-      history("/stories/" + SelectionService.getCurrentProjectId());
-    } catch (error) {
-      console.error("Error creating story:", error);
-    }
+    axios
+      .post("http://localhost:7000/add-story", {
+        id: Math.floor(Math.random() * 100000) + 1,
+        name,
+        description,
+        priority,
+        projectId: SelectionService.getCurrentProjectId() || "",
+        creationDate: new Date(),
+        status: "todo",
+        ownerId: "user-x", // popraw
+      })
+      .then((result) => {
+        console.log(result);
+        StoryService.createStory({
+          id: Math.floor(Math.random() * 100000) + 1,
+          name,
+          description,
+          priority,
+          projectId: SelectionService.getCurrentProjectId() || "",
+          creationDate: new Date(),
+          status: "todo",
+          userId: "user-x",
+        });
+        history("/stories/" + SelectionService.getCurrentProjectId());
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

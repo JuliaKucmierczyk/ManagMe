@@ -1,16 +1,13 @@
+import { ApiService } from '../API/ApiService';
 import { User, mockUsers } from '../Models/User'
 
 export class UserService {
-  static getLoggedInUser(): User {
-    return {
-      id: '1',
-      firstName: 'Julia',
-      lastName: 'Kućmierczyk',
-      role: 'Admin',
-      username: "user1",
-      password: "test"
-    };
+  static setCurrentUser(username: string) {
+    ApiService.setData("logged-user", username);
   }
+  static getLoggedInUser(): User {
+  return ApiService.getData("logged-user")  ;
+ }
 
   static getAllUsers(): User[] {
     return mockUsers;

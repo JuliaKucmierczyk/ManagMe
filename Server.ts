@@ -85,3 +85,9 @@ app.post("/refresh-token", (req, res) => {
   }
 });
 
+app.get("/projects", (req, res) => {
+  //  ProjectModel.find({userId: "22566"}) 
+ProjectModel.find() 
+  .then(projects => res.json(projects))
+  .catch(err => res.json(err))
+;});

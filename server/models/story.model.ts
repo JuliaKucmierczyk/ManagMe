@@ -8,7 +8,7 @@ const storySchema = new mongoose.Schema({
   projectId: { type: String, ref: 'Project' },
   creationDate: { type: Date, default: Date.now },
   status: { type: String, enum: ['todo', 'doing', 'done'], required: true },
-  ownerId: { type: String, ref: 'User' } 
+  userId: { type: String, ref: 'User' } 
 });
 
 export const StoryModel = mongoose.model('Story', storySchema);

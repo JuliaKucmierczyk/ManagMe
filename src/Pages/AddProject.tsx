@@ -5,10 +5,11 @@ import {
   TextArea,
   FormBtn,
 } from "../Styles/StyledComponents";
-import { Project } from "../Models/Project";
+// import { Project } from "../Models/Project";
 import { ProjectService } from "../Services/ProjectService";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const AddProject = () => {
   const [name, setName] = useState("");
@@ -18,18 +19,24 @@ const AddProject = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const newProject: Project = {
-      id: (Math.floor(Math.random() * 100000) + 1).toString(),
-      name,
-      description,
-    };
-
-    try {
-      await ProjectService.createProject(newProject);
-      navigate("/");
-    } catch (error) {
-      console.error("Error creating project:", error);
-    }
+    axios
+      .post("http://localhost:7000/add-project", {
+        id: (Math.floor(Math.random() * 100000) + 1).toString(),
+        name,
+        description,
+        userId: "22655",
+      })
+      .then((result) => {
+        console.log(result);
+        ProjectService.createProject({
+          id: (Math.floor(Math.random() * 100000) + 1).toString(),
+          name,
+          description,
+          userId: "22655",
+        });
+        navigate("/projects");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

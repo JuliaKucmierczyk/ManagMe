@@ -19,6 +19,7 @@ function Register() {
     e.preventDefault();
     axios
       .post("http://localhost:7000/register", {
+        id: (Math.floor(Math.random() * 100000) + 1).toString(),
         username,
         password,
         firstName,

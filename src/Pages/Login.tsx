@@ -7,6 +7,7 @@ import {
 } from "../Styles/StyledComponents";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserService } from "../Services/UserService";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -20,7 +21,8 @@ function Login() {
       .then((result) => {
         console.log(result);
         if (result.data === "Success") {
-          navigate("/");
+          UserService.setCurrentUser(username);
+          navigate("/projects");
         } else {
           navigate("/register");
           alert("You are not registered to this service");

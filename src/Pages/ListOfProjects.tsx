@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SelectionService } from "../Services/SelectionService";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Btn, Nav } from "../Styles/StyledComponents";
-import { ProjectService } from "../Services/ProjectService";
+// import { ProjectService } from "../Services/ProjectService";
+import axios from "axios";
+import { Project } from "../Models/Project";
 
 const Container = styled.section`
   display: flex;
@@ -44,6 +46,7 @@ const ProjectElement = styled.div`
 `;
 
 const ProjectSelection: React.FC = () => {
+  const [projects, setProjects] = useState<Project[]>([]);
   const navigate = useNavigate();
 
   const handleClickProject = (projectId: string) => {
@@ -55,7 +58,19 @@ const ProjectSelection: React.FC = () => {
     navigate(`/add-project`);
   };
 
-  const projects = ProjectService.getAllProjects();
+  useEffect(() => {
+    const fetchProjects = async () => {
+      await axios
+        .get("http://localhost:7000/projects")
+        .then((response) => {
+          console.log(response.data);
+          setProjects(response.data);
+        })
+        .catch((err) => console.log(err));
+    };
+
+    fetchProjects();
+  }, []);
 
   return (
     <Container>

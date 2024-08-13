@@ -15,7 +15,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ListOfProjects />} />
+        <Route path="/projects" element={<ListOfProjects />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/stories/:projectId" element={<Stories />} />
