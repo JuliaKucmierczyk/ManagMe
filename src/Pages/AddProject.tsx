@@ -6,34 +6,30 @@ import {
   FormBtn,
 } from "../Styles/StyledComponents";
 // import { Project } from "../Models/Project";
-import { ProjectService } from "../Services/ProjectService";
+// import { ProjectService } from "../Services/ProjectService";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserService } from "../Services/UserService";
 
 const AddProject = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
+  const currentId = UserService.getLoggedInUser();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
 
     axios
       .post("http://localhost:7000/add-project", {
         id: (Math.floor(Math.random() * 100000) + 1).toString(),
         name,
         description,
-        userId: "22655",
+        userId: currentId.id,
       })
       .then((result) => {
         console.log(result);
-        ProjectService.createProject({
-          id: (Math.floor(Math.random() * 100000) + 1).toString(),
-          name,
-          description,
-          userId: "22655",
-        });
         navigate("/projects");
       })
       .catch((err) => console.log(err));

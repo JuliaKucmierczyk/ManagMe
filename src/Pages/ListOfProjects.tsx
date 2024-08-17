@@ -6,6 +6,7 @@ import { Btn, Nav } from "../Styles/StyledComponents";
 // import { ProjectService } from "../Services/ProjectService";
 import axios from "axios";
 import { Project } from "../Models/Project";
+import { UserService } from "../Services/UserService";
 
 const Container = styled.section`
   display: flex;
@@ -17,7 +18,8 @@ const Container = styled.section`
 
 const ProjectsList = styled.ul`
   display: flex;
-  gap: 3rem;
+  flex-wrap: wrap;
+  gap: 2rem;
 `;
 
 const Li = styled.li`
@@ -58,10 +60,12 @@ const ProjectSelection: React.FC = () => {
     navigate(`/add-project`);
   };
 
+  const currentId = UserService.getLoggedInUser();
+  console.log("current id " + currentId.id);
   useEffect(() => {
     const fetchProjects = async () => {
       await axios
-        .get("http://localhost:7000/projects")
+        .post("http://localhost:7000/projects", { userId: currentId.id })
         .then((response) => {
           console.log(response.data);
           setProjects(response.data);
@@ -70,7 +74,7 @@ const ProjectSelection: React.FC = () => {
     };
 
     fetchProjects();
-  }, []);
+  }, [currentId.id]);
 
   return (
     <Container>

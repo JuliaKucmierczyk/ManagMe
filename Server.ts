@@ -30,7 +30,7 @@ app.post("/login", (req, res) => {
   .then(user => {
       if(user) {
           if(user.password === password){
-              res.json("Success")
+              res.json(user);
           }else{
               res.json("The password is incorrect")
           }
@@ -85,9 +85,9 @@ app.post("/refresh-token", (req, res) => {
   }
 });
 
-app.get("/projects", (req, res) => {
-  //  ProjectModel.find({userId: "22566"}) 
-ProjectModel.find() 
+app.post("/projects", (req, res) => {
+  console.log(req.body);
+ProjectModel.find(req.body) 
   .then(projects => res.json(projects))
   .catch(err => res.json(err))
 ;});

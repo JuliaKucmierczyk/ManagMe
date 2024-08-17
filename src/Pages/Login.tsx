@@ -8,6 +8,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserService } from "../Services/UserService";
+import { User } from "../Models/User";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -20,8 +21,8 @@ function Login() {
       .post("http://localhost:7000/login", { username, password })
       .then((result) => {
         console.log(result);
-        if (result.data === "Success") {
-          UserService.setCurrentUser(username);
+        if (result.data as User) {
+          UserService.setCurrentUser(result.data);
           navigate("/projects");
         } else {
           navigate("/register");
