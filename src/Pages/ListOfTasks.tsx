@@ -12,6 +12,8 @@ import {
   User,
 } from "../Styles/StyledComponents";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const StyledPriority = styled.span`
   border: 1px solid;
@@ -64,17 +66,23 @@ const TaskNav = styled.div`
 `;
 
 const ListOfTasks = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
   const navigate = useNavigate();
   const user = UserService.getLoggedInUser();
   const currentStory = StoryService.getCurrentStoryId();
-  let tasks: Task[] = [];
 
-  if (currentStory) {
-    tasks = TaskService.getTasksByStoryId(currentStory);
-  } else {
-    console.log("Current story: " + currentStory);
-    console.log("There is no current tasks for this id");
-  }
+  useEffect(() => {
+    const fetchTasks = async () => {
+      await axios
+        .post("http://localhost:7000/stories", { storyId: currentStory })
+        .then((response) => {
+          setTasks(response.data);
+        })
+        .catch((err) => console.log(err));
+    };
+
+    fetchTasks();
+  }, [currentStory]);
 
   const groupedTasks = tasks.reduce(
     (acc, task) => {
@@ -89,7 +97,7 @@ const ListOfTasks = () => {
   );
 
   const goBack = () => {
-    navigate(-1);
+    navigate(-1); // popraw
   };
 
   const handleClick = () => {

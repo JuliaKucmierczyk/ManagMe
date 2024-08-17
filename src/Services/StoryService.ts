@@ -7,7 +7,7 @@ export class StoryService {
         return ApiService.getData('stories') || [];
       }
 
-      static getCurrentStoryId(): string | null {
+      static getCurrentStoryId(): string  {
         return ApiService.getData('currentStoryId');
       }
     

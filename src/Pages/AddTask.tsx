@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { StoryService } from "../Services/StoryService";
 import { Task } from "../Models/Task";
-import { TaskService } from "../Services/TaskService";
 import {
   FormInput,
   FormContainer,
@@ -26,34 +25,25 @@ const AddTask: React.FC<Props> = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const newTask: Task = {
-      id: (Math.floor(Math.random() * 100000) + 1).toString(),
-      name,
-      description,
-      priority,
-      storyId: StoryService.getCurrentStoryId() || "",
-      state: "todo",
-      createdAt: new Date().toUTCString(),
-      estimatedTime,
-      startDate: undefined,
-      endDate: undefined,
-      user: undefined,
-    };
-
     axios
-      .post("http://localhost:7000/add-task", { newTask })
+      .post("http://localhost:7000/add-task", {
+        id: (Math.floor(Math.random() * 100000) + 1).toString(),
+        name,
+        description,
+        priority,
+        storyId: StoryService.getCurrentStoryId(),
+        state: "todo",
+        createdAt: new Date().toUTCString(),
+        estimatedTime,
+        startDate: undefined,
+        endDate: undefined,
+        user: undefined,
+      })
       .then((result) => {
         console.log(result);
         navigate("/tasks/" + StoryService.getCurrentStoryId());
       })
       .catch((err) => console.log(err));
-
-    try {
-      await TaskService.createTask(newTask);
-      navigate("/tasks/" + StoryService.getCurrentStoryId());
-    } catch (error) {
-      console.error("Error creating task:", error);
-    }
   };
 
   return (
