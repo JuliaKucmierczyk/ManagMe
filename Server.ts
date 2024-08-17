@@ -86,8 +86,13 @@ app.post("/refresh-token", (req, res) => {
 });
 
 app.post("/projects", (req, res) => {
-  console.log(req.body);
 ProjectModel.find(req.body) 
   .then(projects => res.json(projects))
   .catch(err => res.json(err))
 ;});
+
+app.post("/stories", (req, res) => {
+  StoryModel.find(req.body) 
+    .then(stories => res.json(stories))
+    .catch(err => res.json(err))
+  ;});

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Story } from "../Models/Story";
-import { StoryService } from "../Services/StoryService";
+// import { StoryService } from "../Services/StoryService";
 import { SelectionService } from "../Services/SelectionService";
 import {
   FormInput,
@@ -12,6 +12,7 @@ import {
   TextArea,
 } from "../Styles/StyledComponents";
 import axios from "axios";
+import { UserService } from "../Services/UserService";
 
 interface AddStoryProps {}
 
@@ -30,23 +31,13 @@ const AddStory: React.FC<AddStoryProps> = () => {
         name,
         description,
         priority,
-        projectId: SelectionService.getCurrentProjectId() || "",
+        projectId: SelectionService.getCurrentProjectId(),
         creationDate: new Date(),
         status: "todo",
-        ownerId: "user-x", // popraw
+        userId: UserService.getLoggedInUser().id,
       })
       .then((result) => {
         console.log(result);
-        StoryService.createStory({
-          id: Math.floor(Math.random() * 100000) + 1,
-          name,
-          description,
-          priority,
-          projectId: SelectionService.getCurrentProjectId() || "",
-          creationDate: new Date(),
-          status: "todo",
-          userId: "user-x",
-        });
         history("/stories/" + SelectionService.getCurrentProjectId());
       })
       .catch((err) => console.log(err));

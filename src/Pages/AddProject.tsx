@@ -5,8 +5,6 @@ import {
   TextArea,
   FormBtn,
 } from "../Styles/StyledComponents";
-// import { Project } from "../Models/Project";
-// import { ProjectService } from "../Services/ProjectService";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

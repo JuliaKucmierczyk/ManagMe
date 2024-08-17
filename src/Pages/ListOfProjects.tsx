@@ -3,7 +3,6 @@ import { SelectionService } from "../Services/SelectionService";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Btn, Nav } from "../Styles/StyledComponents";
-// import { ProjectService } from "../Services/ProjectService";
 import axios from "axios";
 import { Project } from "../Models/Project";
 import { UserService } from "../Services/UserService";
@@ -49,6 +48,7 @@ const ProjectElement = styled.div`
 
 const ProjectSelection: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
+  const currentId = UserService.getLoggedInUser();
   const navigate = useNavigate();
 
   const handleClickProject = (projectId: string) => {
@@ -60,14 +60,11 @@ const ProjectSelection: React.FC = () => {
     navigate(`/add-project`);
   };
 
-  const currentId = UserService.getLoggedInUser();
-  console.log("current id " + currentId.id);
   useEffect(() => {
     const fetchProjects = async () => {
       await axios
         .post("http://localhost:7000/projects", { userId: currentId.id })
         .then((response) => {
-          console.log(response.data);
           setProjects(response.data);
         })
         .catch((err) => console.log(err));

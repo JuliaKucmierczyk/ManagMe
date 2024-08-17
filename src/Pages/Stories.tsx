@@ -13,6 +13,8 @@ import {
   Column,
   Row,
 } from "../Styles/StyledComponents";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Container = styled.section`
   display: flex;
@@ -22,16 +24,23 @@ const Container = styled.section`
 `;
 
 const StoriesView = () => {
+  const [stories, setStories] = useState<Story[]>([]);
   const navigate = useNavigate();
-  let stories: Story[] = [];
   const user = UserService.getLoggedInUser();
-
   const currentProject = SelectionService.getCurrentProjectId();
-  if (currentProject) {
-    stories = StoryService.getAllStoriesByProjectId(currentProject);
-  } else {
-    console.log("There is no current project selected");
-  }
+
+  useEffect(() => {
+    const fetchStories = async () => {
+      await axios
+        .post("http://localhost:7000/stories", { projectId: currentProject })
+        .then((response) => {
+          setStories(response.data);
+        })
+        .catch((err) => console.log(err));
+    };
+
+    fetchStories();
+  }, [currentProject]);
 
   const groupedStories = stories.reduce(
     (acc, story) => {
