@@ -1,104 +1,101 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { TaskService } from "../Services/TaskService";
+// import { TaskService } from "../Services/TaskService";
 import { Task } from "../Models/Task";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { StoryService } from "../Services/StoryService";
-import { UserService } from "../Services/UserService";
-import { User } from "../Models/User";
+// import { UserService } from "../Services/UserService";
+// import { User } from "../Models/User";
 import {
   FormInput,
   FormContainer,
   Form,
   FormBtn,
   TextArea,
-  Selector,
 } from "../Styles/StyledComponents";
+import axios from "axios";
 
 const EditTask = () => {
   const navigate = useNavigate();
   const { taskId } = useParams();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [user, setUser] = useState<User>();
-  const [users, setUsers] = useState<User[]>([]);
+  // const [user, setUser] = useState<User>();
+  // const [users, setUsers] = useState<User[]>([]);
   const [task, setTask] = useState<Task | null>(null);
 
+  // const users = UserService.getAllDevs();
   const currentStory = StoryService.getCurrentStoryId();
+  // const loggedUser = UserService.getLoggedInUser();
 
+  // pobiera taska do edycji
   useEffect(() => {
-    console.log(taskId);
-    if (taskId) {
-      const fetchedTask = TaskService.getTaskById(taskId);
-      console.log("Fetched task: " + fetchedTask);
-      setTask(fetchedTask);
-      setName(fetchedTask!.name);
-      setDescription(fetchedTask!.description);
-      setUser(fetchedTask!.user ? fetchedTask!.user : undefined);
-      TaskService.assignUserToTask(fetchedTask!.id, fetchedTask!.user as User);
-    }
-    const users = UserService.getAllDevs();
-    setUsers(users);
+    const fetchTask = async () => {
+      await axios
+        .get(`http://localhost:7000/edit-task/${taskId}`)
+        .then((response) => {
+          console.log(response);
+          setTask(response.data);
+          setName(response.data.name);
+          setDescription(response.data.description);
+          //setUser(response.data.user);
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchTask();
   }, [taskId]);
 
-  const handleEditTask = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (task) {
-      const updatedTask = {
-        ...task,
+  //updajtuje taska
+  const handleEditTask = () => {
+    axios
+      .post(`http://localhost:7000/edit-task/${taskId}`, {
         name,
         description,
-        user,
-        startDate: user ? new Date().toISOString() : undefined,
-        state: user ? "doing" : task.state,
-      };
-      TaskService.assignUserToTask(task.id, updatedTask.user as User),
-        TaskService.updateTask(task.id, updatedTask);
-      navigate(`/tasks/${currentStory}`);
-    }
+        startDate: new Date().toISOString(),
+        state: "doing",
+      })
+      .then((result) => {
+        console.log(result);
+        navigate(`/tasks/${currentStory}`);
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleCancel = () => {
     navigate(`/tasks/${currentStory}`);
   };
 
+  // updatuje taska w bazie danych
   const handleDoneClick = () => {
-    if (task) {
-      const updatedTask = {
-        ...task,
-        endDate: new Date().toISOString(),
+    axios
+      .post(`http://localhost:7000/edit-task/${taskId}`, {
         state: "done",
-      } as Task;
-      TaskService.updateTask(task.id, updatedTask);
-      navigate(`/tasks/${currentStory}`);
-    }
+        endDate: new Date().toISOString(),
+      })
+      .then((result) => {
+        console.log(result);
+        navigate(`/tasks/${currentStory}`);
+      })
+      .catch((err) => console.log(err));
   };
-
-  if (!task) {
-    console.log(task);
-    return <div>Loading task details...</div>;
-  }
 
   return (
     <FormContainer>
       <h2>Edit Task</h2>
-      <Form onSubmit={handleEditTask}>
+      <Form>
         <FormInput
           type="text"
           id="name"
           placeholder="Name"
-          defaultValue={task.name}
-          // value={task.name}
+          defaultValue={task?.name}
           onChange={(event) => setName(event.target.value)}
         />
         <TextArea
           id="description"
           placeholder="Description"
-          defaultValue={task.description}
-          // value={task.description}
+          defaultValue={task?.description}
           onChange={(event) => setDescription(event.target.value)}
         />
-        <Selector
+        {/* <Selector
           id="user"
           value={user?.id}
           onChange={(event) => setUser(event.target.value as unknown as User)}
@@ -108,9 +105,9 @@ const EditTask = () => {
               {user.firstName} ({user.role})
             </option>
           ))}
-        </Selector>
+        </Selector> */}
         <div>
-          <FormBtn type="submit">Save</FormBtn>
+          <FormBtn onClick={handleEditTask}>Save</FormBtn>
           <FormBtn onClick={handleCancel}>Cancel</FormBtn>
           <FormBtn onClick={handleDoneClick}>Done</FormBtn>
         </div>

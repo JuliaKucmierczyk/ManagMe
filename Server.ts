@@ -52,33 +52,33 @@ app.post("/add-project", (req, res) => {
   .catch(err => res.json(err))
 })
 
-app.post("/add-task",(req, res) => {
-  TaskModel.create(req.body)
-  .then(tasks => res.json(tasks))
-  .catch(err => res.json(err))
-})
-
 app.post("/add-story",(req, res) => {
   StoryModel.create(req.body)
   .then(stories => res.json(stories))
   .catch(err => res.json(err))
 })
 
+app.post("/add-task",(req, res) => {
+  TaskModel.create(req.body)
+  .then(tasks => res.json(tasks))
+  .catch(err => res.json(err))
+})
+
 
 app.post("/refresh-token", (req, res) => {
   const { refreshToken } = req.body;
-
+  
   if (!refreshToken) {
     return res.status(403).json({ error: "Refresh token is required" });
   }
-
+  
   try {
     const decoded = JWTService.verifyRefreshToken(refreshToken);
     const newToken = JWTService.generateToken({
       id: decoded.id,
       role: decoded.role,
     });
-
+    
     res.json({ token: newToken });
   } catch (error) {
     res.status(403).json({ error: "Invalid refresh token" });
@@ -86,13 +86,35 @@ app.post("/refresh-token", (req, res) => {
 });
 
 app.post("/projects", (req, res) => {
-ProjectModel.find(req.body) 
+  ProjectModel.find(req.body) 
   .then(projects => res.json(projects))
   .catch(err => res.json(err))
-;});
-
+  ;});
+  
 app.post("/stories", (req, res) => {
   StoryModel.find(req.body) 
-    .then(stories => res.json(stories))
-    .catch(err => res.json(err))
+  .then(stories => res.json(stories))
+  .catch(err => res.json(err))
   ;});
+    
+app.post("/tasks", (req, res) => {
+    TaskModel.find(req.body) 
+    .then(tasks => res.json(tasks))
+    .catch(err => res.json(err))
+    ;});
+
+app.post("/edit-task/:taskId",(req, res) => {
+  const taskId = req.params.taskId;
+  const updatedTask = req.body;
+  TaskModel.findOneAndUpdate({id: taskId}, updatedTask)
+   .then(task => res.json(task))
+   .catch(err => res.json(err))
+})
+
+app.get("/edit-task/:taskId",(req, res) => {
+  const taskId = req.params.taskId;
+  TaskModel.findOne({id: taskId})
+  .then(task => res.json(task))
+  .catch(err => res.json(err))
+})
+

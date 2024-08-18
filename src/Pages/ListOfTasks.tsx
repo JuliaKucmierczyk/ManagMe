@@ -74,8 +74,9 @@ const ListOfTasks = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       await axios
-        .post("http://localhost:7000/stories", { storyId: currentStory })
+        .post("http://localhost:7000/tasks", { storyId: currentStory })
         .then((response) => {
+          console.log(response);
           setTasks(response.data);
         })
         .catch((err) => console.log(err));
@@ -186,9 +187,9 @@ const ListOfTasks = () => {
                     Start Date: <span>{(task as Task).startDate}</span>
                   </p>
                 </div>
-                <p>
+                {/* <p>
                   Assigned:<span>{(task as Task).user?.firstName}</span>
-                </p>
+                </p> */}
               </li>
             ))}
           </ul>
