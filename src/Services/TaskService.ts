@@ -1,6 +1,9 @@
+// import axios from "axios";
 import { ApiService } from "../API/ApiService";
 import { Task } from "../Models/Task";
-import { User } from "../Models/User";
+// import { User } from "../Models/User";
+// import { useState } from "react";
+
 
 export class TaskService {
   private static readonly STORAGE_KEY = 'tasks';
@@ -51,15 +54,17 @@ export class TaskService {
     TaskService.setTasks(filteredTasks);
   }
 
-  static assignUserToTask(taskId: string, user: User): void {
-    const task = TaskService.getTaskById(taskId);
-    if (task) {
-      task.user = user;
-      task.state = 'doing';
-      task.startDate = new Date().toUTCString();
-      TaskService.updateTask(taskId, task);
-    }
-  }
+  
+
+  // static assignUserToTask(taskId: string, userId: string): void {
+  //   const task = TaskService.getTaskById(taskId);
+  //   if (task) {
+  //     task.userId = ;
+  //     task.state = 'doing';
+  //     task.startDate = new Date().toUTCString();
+  //     TaskService.updateTask(taskId, task);
+  //   }
+  // }
 
   static markTaskAsDone(taskId: string): void {
     const task = TaskService.getTaskById(taskId);
@@ -70,10 +75,19 @@ export class TaskService {
     }
   }
 
-  static getNumberOfTasksInStory(storyId: string): number {
-    const tasks = TaskService.getAllTasks();
-    return tasks.filter(task => task.storyId === storyId).length;
-  }
+  // popraw
+  // static getNumberOfTasksInStory(storyId: string): string | null {
+  //   const fetchnumberOfTasks = async () => {
+  //     await axios
+  //       .get(`http://localhost:7000/tasks/${storyId}`)
+  //       .then((response) => {
+  //         console.log(response);
+  //         return (response.data);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   };
+  //  fetchnumberOfTasks();
+  // }
   
 
   private static setTasks(tasks: Task[]): void {

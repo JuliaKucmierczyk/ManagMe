@@ -28,6 +28,9 @@ const StoriesView = () => {
   const navigate = useNavigate();
   const user = UserService.getLoggedInUser();
   const currentProject = SelectionService.getCurrentProjectId();
+  // const currentStory = StoryService.getCurrentStoryId();
+  const numOfTasks = "0";
+  // numOfTasks = TaskService.getNumberOfTasksInStory(currentStory);
 
   useEffect(() => {
     const fetchStories = async () => {
@@ -70,8 +73,8 @@ const StoriesView = () => {
     navigate("/add-story");
   };
 
-  const goBack = () => {
-    navigate("/");
+  const goToProjects = () => {
+    navigate("/projects");
   };
 
   const handleStoryClick = (storyId: number) => {
@@ -84,8 +87,8 @@ const StoriesView = () => {
       <h1>Stories</h1>
       <Nav>
         <Row>
-          <Btn type="button" onClick={goBack}>
-            Go Back
+          <Btn type="button" onClick={goToProjects}>
+            Projects
           </Btn>
           <Btn type="button" onClick={handleClick}>
             Create new Story
@@ -105,11 +108,7 @@ const StoriesView = () => {
               >
                 <Nav>
                   <div>{(story as Story).name}</div>
-                  <span>
-                    {TaskService.getNumberOfTasksInStory(
-                      (story as Story).id.toString()
-                    )}
-                  </span>
+                  <span>{numOfTasks}</span>
                 </Nav>
               </li>
             ))}
@@ -124,11 +123,7 @@ const StoriesView = () => {
                 onClick={() => handleStoryClick((story as Story).id)}
               >
                 <div>{(story as Story).name}</div>
-                <span>
-                  {TaskService.getNumberOfTasksInStory(
-                    (story as Story).id.toString()
-                  )}
-                </span>
+                <span>{numOfTasks}</span>
               </li>
             ))}
           </ul>
@@ -142,11 +137,7 @@ const StoriesView = () => {
                 onClick={() => handleStoryClick((story as Story).id)}
               >
                 <div>{(story as Story).name}</div>
-                <span>
-                  {TaskService.getNumberOfTasksInStory(
-                    (story as Story).id.toString()
-                  )}
-                </span>
+                <span>{numOfTasks}</span>
               </li>
             ))}
           </ul>

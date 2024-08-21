@@ -17,4 +17,9 @@ export class UserService {
     const users = this.getAllUsers(); 
     return users.filter((user) => user.role === "Devops" || user.role === "Developer");
   }
+
+  static getUserById(userId: string): User | undefined {
+    const users = this.getAllUsers();
+    return users.find((user) => user.id === userId);
+  }
 }

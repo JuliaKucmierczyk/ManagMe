@@ -103,6 +103,13 @@ app.post("/tasks", (req, res) => {
     .catch(err => res.json(err))
     ;});
 
+  app.get("/tasks/:storyId", (req, res) => {
+    const storyId = req.params.storyId;
+    TaskModel.countDocuments({storyId: storyId})
+    .then(number => res.json(number))
+    .catch(err => res.json(err))
+  ;});
+
 app.post("/edit-task/:taskId",(req, res) => {
   const taskId = req.params.taskId;
   const updatedTask = req.body;

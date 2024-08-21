@@ -1,5 +1,3 @@
-import { User } from "./User";
-
 export interface Task {
     id: string;
     name: string;
@@ -11,5 +9,5 @@ export interface Task {
     estimatedTime: number | undefined;
     startDate: string | undefined; 
     endDate: string | undefined;
-    user: User | undefined;
+    userId: string | "";
 }

@@ -32,10 +32,14 @@ function Register() {
       .catch((err) => console.log(err));
   };
 
+  const Login = () => {
+    navigate("/login");
+  };
+
   return (
     <FormContainer>
       <h1>Register</h1>
-      <Form onSubmit={handleSubmit} className="form">
+      <Form className="form">
         <FormInput
           value={firstName}
           onChange={(e) => setfirstName(e.target.value)}
@@ -60,7 +64,10 @@ function Register() {
           type="password"
           placeholder="Password"
         />
-        <FormBtn>Register</FormBtn>
+        <div>
+          <FormBtn onClick={handleSubmit}>Register</FormBtn>
+          <FormBtn onClick={Login}>Login</FormBtn>
+        </div>
       </Form>
     </FormContainer>
   );

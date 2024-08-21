@@ -32,10 +32,14 @@ function Login() {
       .catch((err) => console.log(err));
   };
 
+  const Register = () => {
+    navigate("/register");
+  };
+
   return (
     <FormContainer>
       <h1>Login</h1>
-      <Form id="loginform1" onSubmit={handleSubmit}>
+      <Form id="loginform1">
         <FormInput
           type="text"
           name="login"
@@ -54,7 +58,10 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <FormBtn>Login</FormBtn>
+        <div>
+          <FormBtn onClick={handleSubmit}>Login</FormBtn>
+          <FormBtn onClick={Register}>Register</FormBtn>
+        </div>
       </Form>
     </FormContainer>
   );

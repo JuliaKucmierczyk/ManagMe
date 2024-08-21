@@ -14,6 +14,7 @@ import {
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { SelectionService } from "../Services/SelectionService";
 
 const StyledPriority = styled.span`
   border: 1px solid;
@@ -97,8 +98,13 @@ const ListOfTasks = () => {
     }
   );
 
-  const goBack = () => {
-    navigate(-1); // popraw
+  const goToProjects = () => {
+    navigate("/projects");
+  };
+
+  const projectId = SelectionService.getCurrentProjectId();
+  const goToStories = () => {
+    navigate(`/stories/${projectId}`);
   };
 
   const handleClick = () => {
@@ -115,7 +121,8 @@ const ListOfTasks = () => {
       <h1>Tasks</h1>
       <Nav>
         <Row>
-          <Btn onClick={goBack}>Go Back</Btn>
+          <Btn onClick={goToProjects}>Projects</Btn>
+          <Btn onClick={goToStories}>Stories</Btn>
           <Btn onClick={handleClick}>Add Task</Btn>
         </Row>
         <User>{user.firstName + " " + user.lastName}</User>
@@ -187,9 +194,16 @@ const ListOfTasks = () => {
                     Start Date: <span>{(task as Task).startDate}</span>
                   </p>
                 </div>
-                {/* <p>
-                  Assigned:<span>{(task as Task).user?.firstName}</span>
-                </p> */}
+                <p>
+                  Assigned:
+                  <span>
+                    {" " +
+                      UserService.getUserById((task as Task).userId)
+                        ?.firstName +
+                      " " +
+                      UserService.getUserById((task as Task).userId)?.lastName}
+                  </span>
+                </p>
               </li>
             ))}
           </ul>

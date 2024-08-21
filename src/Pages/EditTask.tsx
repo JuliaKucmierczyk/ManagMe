@@ -1,29 +1,27 @@
 import { useNavigate, useParams } from "react-router-dom";
-// import { TaskService } from "../Services/TaskService";
 import { Task } from "../Models/Task";
 import { useEffect, useState } from "react";
 import { StoryService } from "../Services/StoryService";
-// import { UserService } from "../Services/UserService";
-// import { User } from "../Models/User";
 import {
   FormInput,
   FormContainer,
   Form,
   FormBtn,
   TextArea,
+  Selector,
 } from "../Styles/StyledComponents";
 import axios from "axios";
+import { UserService } from "../Services/UserService";
 
 const EditTask = () => {
   const navigate = useNavigate();
   const { taskId } = useParams();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  // const [user, setUser] = useState<User>();
-  // const [users, setUsers] = useState<User[]>([]);
+  const [selectedUserId, setSelectedUserId] = useState("");
   const [task, setTask] = useState<Task | null>(null);
 
-  // const users = UserService.getAllDevs();
+  const users = UserService.getAllDevs();
   const currentStory = StoryService.getCurrentStoryId();
   // const loggedUser = UserService.getLoggedInUser();
 
@@ -37,7 +35,7 @@ const EditTask = () => {
           setTask(response.data);
           setName(response.data.name);
           setDescription(response.data.description);
-          //setUser(response.data.user);
+          setSelectedUserId(response.data.user);
         })
         .catch((err) => console.log(err));
     };
@@ -50,14 +48,16 @@ const EditTask = () => {
       .post(`http://localhost:7000/edit-task/${taskId}`, {
         name,
         description,
-        startDate: new Date().toISOString(),
+        userId: selectedUserId,
+        startDate: new Date().toLocaleString(),
         state: "doing",
       })
       .then((result) => {
         console.log(result);
-        navigate(`/tasks/${currentStory}`);
       })
       .catch((err) => console.log(err));
+
+    navigate(`/tasks/${currentStory}`);
   };
 
   const handleCancel = () => {
@@ -69,13 +69,14 @@ const EditTask = () => {
     axios
       .post(`http://localhost:7000/edit-task/${taskId}`, {
         state: "done",
-        endDate: new Date().toISOString(),
+        endDate: new Date().toLocaleString(),
       })
       .then((result) => {
         console.log(result);
-        navigate(`/tasks/${currentStory}`);
       })
       .catch((err) => console.log(err));
+
+    navigate(`/tasks/${currentStory}`);
   };
 
   return (
@@ -95,17 +96,18 @@ const EditTask = () => {
           defaultValue={task?.description}
           onChange={(event) => setDescription(event.target.value)}
         />
-        {/* <Selector
+        <Selector
           id="user"
-          value={user?.id}
-          onChange={(event) => setUser(event.target.value as unknown as User)}
+          value={selectedUserId}
+          onChange={(event) => setSelectedUserId(event.target.value)}
         >
+          <option key="placeholder">Select a User</option>
           {users.map((user) => (
             <option key={user.id} value={user.id}>
               {user.firstName} ({user.role})
             </option>
           ))}
-        </Selector> */}
+        </Selector>
         <div>
           <FormBtn onClick={handleEditTask}>Save</FormBtn>
           <FormBtn onClick={handleCancel}>Cancel</FormBtn>
