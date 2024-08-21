@@ -33,7 +33,7 @@ const AddTask: React.FC<Props> = () => {
         priority,
         storyId: StoryService.getCurrentStoryId(),
         state: "todo",
-        createdAt: new Date().toLocaleString(),
+        createdAt: new Date().toISOString(),
         estimatedTime,
         startDate: undefined,
         endDate: undefined,

@@ -152,7 +152,13 @@ const ListOfTasks = () => {
                 </Nav>
                 <p>{(task as Task).description}</p>
                 <p>
-                  Created: <span>{(task as Task).createdAt}</span>
+                  Created:{" "}
+                  <span>
+                    {new Date((task as Task).createdAt!).toLocaleDateString(
+                      "en-US",
+                      { month: "long", day: "numeric", year: "numeric" }
+                    )}
+                  </span>
                 </p>
                 <p>
                   Estimated Hours: <span>{(task as Task).estimatedTime}</span>
@@ -184,14 +190,26 @@ const ListOfTasks = () => {
                 </Nav>
                 <p>{(task as Task).description}</p>
                 <p>
-                  Created: <span>{(task as Task).createdAt}</span>
+                  Created:{" "}
+                  <span>
+                    {new Date((task as Task).createdAt!).toLocaleDateString(
+                      "en-US",
+                      { month: "long", day: "numeric", year: "numeric" }
+                    )}
+                  </span>
                 </p>
                 <p>
                   Estimated Hours: <span>{(task as Task).estimatedTime}</span>
                 </p>
                 <div className="dates">
                   <p>
-                    Start Date: <span>{(task as Task).startDate}</span>
+                    Start Date:{" "}
+                    <span>
+                      {new Date((task as Task).startDate!).toLocaleDateString(
+                        "en-US",
+                        { month: "long", day: "numeric", year: "numeric" }
+                      )}
+                    </span>
                   </p>
                 </div>
                 <p>
@@ -231,17 +249,37 @@ const ListOfTasks = () => {
                 </Nav>
                 <p>{(task as Task).description}</p>
                 <p>
-                  Created: <span>{(task as Task).createdAt}</span>
+                  Created:{" "}
+                  <span>
+                    <span>
+                      {new Date((task as Task).createdAt!).toLocaleDateString(
+                        "en-US",
+                        { month: "long", day: "numeric", year: "numeric" }
+                      )}
+                    </span>
+                  </span>
                 </p>
                 <p>
                   Estimated Hours: <span>{(task as Task).estimatedTime}</span>
                 </p>
                 <div className="dates">
                   <p>
-                    Start Date: <span>{(task as Task).startDate}</span>
+                    Start Date:{" "}
+                    <span>
+                      {new Date((task as Task).startDate!).toLocaleDateString(
+                        "en-US",
+                        { month: "long", day: "numeric", year: "numeric" }
+                      )}
+                    </span>
                   </p>
                   <p>
-                    EndDate: <span>{(task as Task).endDate}</span>
+                    EndDate:{" "}
+                    <span>
+                      {new Date((task as Task).endDate!).toLocaleDateString(
+                        "en-US",
+                        { month: "long", day: "numeric", year: "numeric" }
+                      )}
+                    </span>
                   </p>
                 </div>
               </li>

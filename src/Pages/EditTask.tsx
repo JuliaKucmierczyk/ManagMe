@@ -49,11 +49,12 @@ const EditTask = () => {
         name,
         description,
         userId: selectedUserId,
-        startDate: new Date().toLocaleString(),
+        startDate: new Date().toISOString(),
         state: "doing",
       })
       .then((result) => {
         console.log(result);
+        navigate(`/tasks/${currentStory}`);
       })
       .catch((err) => console.log(err));
 
@@ -69,10 +70,11 @@ const EditTask = () => {
     axios
       .post(`http://localhost:7000/edit-task/${taskId}`, {
         state: "done",
-        endDate: new Date().toLocaleString(),
+        endDate: new Date().toISOString(),
       })
       .then((result) => {
         console.log(result);
+        navigate(`/tasks/${currentStory}`);
       })
       .catch((err) => console.log(err));
 
