@@ -1,6 +1,5 @@
 import "./Styles/App.css";
 import ListOfProjects from "./Pages/ListOfProjects";
-// import { mockProjects } from "./Models/Project";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Stories from "./Pages/Stories";
 import AddStory from "./Pages/AddStory";

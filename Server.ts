@@ -1,6 +1,7 @@
 import express from "express";
+// import { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
-import {JWTService} from "./server/JWTService.ts";
+// import {JWTService} from "./server/JWTService.ts";
 import {UserModel} from "./server/models/user.model.ts"
 import { dbconnection } from "./server/Database.ts";
 import cors from "cors";
@@ -24,13 +25,44 @@ app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
 
+// function authMiddleware(req: Request, res: Response, next: NextFunction) {
+//   const token = req.headers.authorization?.split(" ")[1];
+//   if (!token) return res.status(401).json({ message: "Access denied" });
+
+//   try {
+//     const decoded = JWTService.verifyToken(token);
+//     req.user = decoded;
+//     next();
+//   } catch (error) {
+//     res.status(403).json({ message: "Invalid token" });
+//   }
+// }
+
+// app.get("/protected", authMiddleware, (req, res) => {
+//   res.json({ message: "You have accessed a protected route", user: req.user });
+// });
+
+// app.post("/refresh-token", (req, res) => {
+//   const { refreshToken } = req.body;
+//   try {
+//     const decoded = JWTService.verifyRefreshToken(refreshToken);
+//     const newAccessToken = JWTService.generateToken(decoded.id);
+//     res.json({ accessToken: newAccessToken });
+//   } catch (error) {
+//     res.status(403).json({ message: "Invalid refresh token" });
+//   }
+// });
+
 app.post("/login", (req, res) => {
   const {username, password} = req.body;
   UserModel.findOne({username : username})
   .then(user => {
       if(user) {
           if(user.password === password){
-              res.json(user);
+            // const accessToken = JWTService.generateToken(user.id);
+            // const refreshToken = JWTService.generateRefreshToken(user.id);
+            // res.json({ accessToken, refreshToken });
+            res.json(user);
           }else{
               res.json("The password is incorrect")
           }
@@ -63,27 +95,6 @@ app.post("/add-task",(req, res) => {
   .then(tasks => res.json(tasks))
   .catch(err => res.json(err))
 })
-
-
-app.post("/refresh-token", (req, res) => {
-  const { refreshToken } = req.body;
-  
-  if (!refreshToken) {
-    return res.status(403).json({ error: "Refresh token is required" });
-  }
-  
-  try {
-    const decoded = JWTService.verifyRefreshToken(refreshToken);
-    const newToken = JWTService.generateToken({
-      id: decoded.id,
-      role: decoded.role,
-    });
-    
-    res.json({ token: newToken });
-  } catch (error) {
-    res.status(403).json({ error: "Invalid refresh token" });
-  }
-});
 
 app.post("/projects", (req, res) => {
   ProjectModel.find(req.body) 
