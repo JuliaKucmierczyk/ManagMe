@@ -118,6 +118,24 @@ export const FormBtn = styled.button`
     background-color: rgb(11, 82, 152);
   }
 `;
+
+export const DeleteBtn = styled.button`
+  background-color: #ff5031;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  margin: 1rem 1rem 0 0;
+  width: 6rem;
+
+  &:hover {
+    background-color: #bb331b;
+  }
+`;
+
 export const FormInput = styled.input`
   padding: 10px;
   border: 1px solid #ccc;

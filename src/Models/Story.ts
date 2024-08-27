@@ -1,5 +1,5 @@
 export interface Story {
-    id: number;
+    id: string;
     name: string;
     description: string;
     priority: 'low' | 'medium' | 'high';

@@ -9,6 +9,7 @@ import {
   FormBtn,
   TextArea,
   Selector,
+  DeleteBtn,
 } from "../Styles/StyledComponents";
 import axios from "axios";
 import { UserService } from "../Services/UserService";
@@ -81,6 +82,18 @@ const EditTask = () => {
     navigate(`/tasks/${currentStory}`);
   };
 
+  // usuwanie taska
+  const handleDeleteTask = () => {
+    axios
+      .delete(`http://localhost:7000/edit-task/${taskId}`)
+      .then((result) => {
+        console.log(result);
+        navigate(`/tasks/${currentStory}`);
+      })
+      .catch((err) => console.log(err));
+    navigate(`/tasks/${currentStory}`);
+  };
+
   return (
     <FormContainer>
       <h2>Edit Task</h2>
@@ -114,6 +127,7 @@ const EditTask = () => {
           <FormBtn onClick={handleEditTask}>Save</FormBtn>
           <FormBtn onClick={handleCancel}>Cancel</FormBtn>
           <FormBtn onClick={handleDoneClick}>Done</FormBtn>
+          <DeleteBtn onClick={handleDeleteTask}>Delete</DeleteBtn>
         </div>
       </Form>
     </FormContainer>

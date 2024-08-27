@@ -103,6 +103,14 @@ app.post("/tasks", (req, res) => {
     .catch(err => res.json(err))
     ;});
 
+    // czy to wyzej nie robi tego samego?
+    // get all
+    app.get("/tasks", (req, res) => {
+      TaskModel.find(req.body) 
+      .then(tasks => res.json(tasks))
+      .catch(err => res.json(err))
+      ;});
+
   app.get("/tasks/:storyId", (req, res) => {
     const storyId = req.params.storyId;
     TaskModel.countDocuments({storyId: storyId})
@@ -121,6 +129,13 @@ app.post("/edit-task/:taskId",(req, res) => {
 app.get("/edit-task/:taskId",(req, res) => {
   const taskId = req.params.taskId;
   TaskModel.findOne({id: taskId})
+  .then(task => res.json(task))
+  .catch(err => res.json(err))
+})
+
+app.delete("/edit-task/:taskId",(req, res) => {
+  const taskId = req.params.taskId;
+  TaskModel.deleteOne({id: taskId})
   .then(task => res.json(task))
   .catch(err => res.json(err))
 })
